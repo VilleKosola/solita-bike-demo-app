@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS journey;
 DROP TABLE IF EXISTS station;
 
+-- TODO: add constrains handling
 CREATE TABLE station (
     id INT PRIMARY KEY,
     fid INT,
