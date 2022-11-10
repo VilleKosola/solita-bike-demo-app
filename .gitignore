@@ -105,3 +105,6 @@ dist
 
 #csv files
 data/
+
+#.env files
+.env*
