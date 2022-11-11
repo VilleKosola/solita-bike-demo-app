@@ -3,7 +3,7 @@ name: Node.js CI
 on: push
     
 jobs:
-  Test Frontend:
+  TestFrontend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,7 +26,7 @@ jobs:
         npm run lint
         npm run format
 
-  Test Backend:
+  TestBackend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -42,7 +42,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Test backend
-    - run: |
+      run: |
         npm ci
         npm run build --if-present
         npm test
