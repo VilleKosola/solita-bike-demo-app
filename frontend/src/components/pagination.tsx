@@ -55,7 +55,6 @@ const Pagination = (props: paginationProps) => {
           <option value={50}>50</option>
           <option value={100}>100</option>
           <option value={1000}>1000</option>
-          <option value={10000}>10000</option>
         </select>
       </div>
     </div>
