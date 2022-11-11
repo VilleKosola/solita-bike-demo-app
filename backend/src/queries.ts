@@ -10,10 +10,10 @@ import { Pool } from 'pg';
   })
   
   export function getStations(request: Request, response: Response){
-    let limit = request.params.limit || 100;
-    let offset = request.params.offset || 0;
-    let orderBy = request.params.orderby || 'nimi';
-    let ordering = request.params.orderBy || 'ASC';
+    let limit = request.query.limit || '100';
+    let offset = request.query.offset || '0';
+    let orderBy = request.query.orderby || 'nimi';
+    let ordering = request.query.ordering || 'ASC';
     return client.query(`SELECT * FROM station ORDER BY ${orderBy} ${ordering} LIMIT ${limit} OFFSET ${offset}`, (error: Error, results) => {
       if (error) {
         return response.status(500).json(error.message)
@@ -34,10 +34,10 @@ import { Pool } from 'pg';
   }
   
   export function getJourneys(request: Request, response: Response){
-    let limit = request.params.limit || 100;
-    let offset = request.params.offset || 0;
-    let orderBy = request.params.orderby || 'departuredate';
-    let ordering = request.params.orderBy || 'ASC';
+    let limit = request.query.limit || '100';
+    let offset = request.query.offset || '0';
+    let orderBy = request.query.orderby || 'departuredate';
+    let ordering = request.query.ordering || 'ASC';
     return client.query(`SELECT * FROM journey ORDER BY ${orderBy} ${ordering} LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
       if (error) {
         return response.status(500).json(error.message)
