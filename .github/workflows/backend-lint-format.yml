@@ -13,6 +13,7 @@ jobs:
         node-version: [18.x]
     steps:
     - uses: actions/checkout@v3
+    - run: cd ./frontend
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -36,6 +37,7 @@ jobs:
         node-version: [18.x]
     steps:
     - uses: actions/checkout@v3
+    - run: cd ./frontend
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
