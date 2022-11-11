@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface paginationProps {
-  offsetChange: any;
-  limitChange: any;
+  offsetChange: {(value: number): void};
+  limitChange: {(value: number): void};
   limit: number;
   offset: number;
 }
