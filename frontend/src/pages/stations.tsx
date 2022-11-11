@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Station } from '../types/station';
 import Pagination from '../components/pagination';
 
@@ -15,9 +14,10 @@ const Stations = () => {
   }
 
   React.useEffect(() => {
-    axios
-      .get(`http://localhost:3002/station`, {params: {limit, offset, orderby, ordering}})
-      .then((response) => setStations(response.data));
+    fetch(`http://localhost:3002/station?` + 
+    new URLSearchParams({"limit":limit.toString(), "offset":offset.toString(), "orderby":orderby, "ordering":ordering}))
+      .then((response) => response.json())
+      .then((data) => setStations(data));
   }, [orderby, limit, offset, ordering]);
 
   return (

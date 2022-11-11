@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { Journey } from '../types/journey';
 import Pagination from '../components/pagination';
@@ -17,9 +16,10 @@ const Journeys = () => {
 
   React.useEffect(() => {
     console.log('fetching from:', offset);
-    axios
-      .get(`http://localhost:3002/journey`, {params: {limit, offset, orderby, ordering}})
-      .then((response) => setJourneys(response.data));
+    fetch(`http://localhost:3002/journey?` + 
+    new URLSearchParams({"limit":limit.toString(), "offset":offset.toString(), "orderby":orderby, "ordering":ordering}))
+      .then((response) => response.json())
+      .then((data) => setJourneys(data));
   }, [orderby, limit, offset, ordering]);
 
   return (
