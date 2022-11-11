@@ -24,21 +24,25 @@ function Journeys(props: {offset: number, limit: number}) {
 
   return (
     <div>
-      <ul className="journeys">
-        <li className="grid grid-cols-6 p-2 border-b" key={'header'}>
-          <h4 className="text-left"> #. </h4>
-          <h4 className="text-left col-span-2"> Stations </h4>
-          <p className="text-left"> Dates </p>
+      <ul className="journeys bg-slate-300 font-bold">
+        <li className="grid grid-cols-9 p-2 border-b" key={'header'}>
+          <p className="text-left"> #. </p>
+          <p className="text-left col-span-2"> Start station </p>
+          <p className="text-left col-span-2"> End station </p>
+          <p className="text-left"> Start date </p>
+          <p className="text-left"> End date </p>
           <p className="text-left">Distance</p>
           <p className="text-left">Duration</p>
         </li>
       </ul>
       <ul className="journeys">
         {journeys.map((journey: Journey, i: number) => (
-          <li className="grid grid-cols-6 p-2 border-b" key={journey.id}>
-            <h4 className="text-left"> {i+1+props.offset}. </h4>
-            <h4 className="text-left col-span-2"> {journey.departure_station_name} - {journey.return_station_name}</h4>
-            <p className="text-left">{dayjs(journey.departuredate).format('DD.MM.YYYY')} - {dayjs(journey.returndate).format('DD.MM.YYYY')}</p>
+          <li className="grid grid-cols-9 p-2 border-b" key={journey.id}>
+            <p className="text-left"> {i+1+props.offset}. </p>
+            <p className="text-left col-span-2"> {journey.departure_station_name}</p>
+            <p className="text-left col-span-2"> {journey.return_station_name}</p>
+            <p className="text-left">{dayjs(journey.departuredate).format('DD.MM.YYYY')}</p>
+            <p className="text-left">{dayjs(journey.returndate).format('DD.MM.YYYY')}</p>
             <p className="text-left">{journey.distance / 1000}km</p>
             <p className="text-left">{Math.floor(journey.duration/60) + 'min ' + journey.duration%60}s</p>
           </li>
