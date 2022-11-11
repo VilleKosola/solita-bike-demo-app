@@ -3,15 +3,37 @@ name: Node.js CI
 on: push
     
 jobs:
-  build:
-
+  Test Frontend:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./frontend
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [18.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Test frontend
+      run: |
+        npm ci
+        npm run build --if-present
+        npm test
+        npm run lint
+        npm run format
 
+  Test Backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    strategy:
+      matrix:
+        node-version: [18.x]
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -20,17 +42,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Test backend
-      working-directory: ./backend
-      run: |
+    - run: |
         npm ci
         npm run build --if-present
         npm test
         npm run dev
-    - name: Test frontend
-      working-directory: ./frontend
-      run: |
-        npm ci
-        npm run build --if-present
-        npm test
-        npm run lint
-        npm run format
