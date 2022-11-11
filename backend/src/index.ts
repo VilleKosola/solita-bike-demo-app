@@ -24,7 +24,7 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 app.use(express.json());
 
-app.get('/station', db.getStations)
+app.get('/station/:limit/:offset', db.getStations)
 app.get('/journey/:limit/:offset', db.getJourneys)
 app.get('/journey-count', db.getJourneyCount)
 

@@ -10,20 +10,26 @@ import { Pool } from 'pg';
   })
   
   export function getStations(request: Request, response: Response){
-    return client.query('SELECT * FROM station ORDER BY id ASC', (error, results) => {
+    let limit = request.params.limit || 100;
+    let offset = request.params.offset || 0;
+    let orderBy = request.params.orderby || 'nimi';
+    let ordering = request.params.orderBy || 'ASC';
+    return client.query(`SELECT * FROM station ORDER BY ${orderBy} ${ordering} LIMIT ${limit} OFFSET ${offset}`, (error: Error, results) => {
       if (error) {
-        throw error
+        return response.status(500).json(error.message)
+      } else {
+        response.status(200).json(results.rows)
       }
-      response.status(200).json(results.rows)
-    })
+    })  
   }
   
   export function getJourneyCount(request: Request, response: Response) {
     return client.query('SELECT COUNT(*) FROM journey', (error, results) => {
       if (error) {
-        throw error
+        return response.status(500).json(error.message)
+      } else {
+        response.status(200).json(results.rows)
       }
-      response.status(200).json(results.rows)
     })
   }
   
@@ -31,12 +37,14 @@ import { Pool } from 'pg';
     let limit = request.params.limit || 100;
     let offset = request.params.offset || 0;
     let orderBy = request.params.orderby || 'departuredate';
-    return client.query(`SELECT * FROM journey ORDER BY ${orderBy} ASC LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
+    let ordering = request.params.orderBy || 'ASC';
+    return client.query(`SELECT * FROM journey ORDER BY ${orderBy} ${ordering} LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
       if (error) {
-        throw error
-      }
-      response.status(200).json(results.rows)
-    })
+        return response.status(500).json(error.message)
+      } else {
+        response.status(200).json(results.rows)
+      }      
+    })     
   }
 
 
