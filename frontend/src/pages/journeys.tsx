@@ -1,10 +1,11 @@
 import React from 'react';
-import dayjs from 'dayjs';
 import { Journey } from '../types/journey';
 import Pagination from '../components/pagination';
+import { getAllJourneys } from '../services/JourneysService';
+import JourneysList from '../components/journeys-list';
 
 const Journeys = () => {
-  const [journeys, setJourneys] = React.useState([]);
+  const [journeys, setJourneys] = React.useState([] as Journey[]);
   const [orderby, setOrderBy] = React.useState('');
   const [limit, setLimit] = React.useState(100);
   const [offset, setOffset] = React.useState(0);
@@ -12,14 +13,13 @@ const Journeys = () => {
 
   const toggleOrdering = () => {
     setOrdering(ordering === 'ASC' ? 'DESC' : 'ASC');
-  }
+  };
 
   React.useEffect(() => {
     console.log('fetching from:', offset);
-    fetch(`http://localhost:3002/journey?` + 
-    new URLSearchParams({"limit":limit.toString(), "offset":offset.toString(), "orderby":orderby, "ordering":ordering}))
-      .then((response) => response.json())
-      .then((data) => setJourneys(data));
+    getAllJourneys({ limit, offset, orderby, ordering }).then((data) =>
+      setJourneys(data)
+    );
   }, [orderby, limit, offset, ordering]);
 
   return (
@@ -33,47 +33,72 @@ const Journeys = () => {
       <ul className="journeys bg-slate-300 font-bold">
         <li className="grid grid-cols-9 p-2 border-b" key={'header'}>
           <p className="text-left"> #. </p>
-          <p className="text-left col-span-2 cursor-pointer" onClick={() => {setOrderBy('departure_station_name'); toggleOrdering()}}> Start station </p>
-          <p className="text-left col-span-2 cursor-pointer" onClick={() => {setOrderBy('return_station_name'); toggleOrdering()}}> End station </p>
-          <p className="text-left cursor-pointer" onClick={() => {setOrderBy('departuredate'); toggleOrdering()}}> Start date </p>
-          <p className="text-left cursor-pointer" onClick={() => {setOrderBy('returndate'); toggleOrdering()}}> End date </p>
-          <p className="text-left cursor-pointer" onClick={() => {setOrderBy('distance'); toggleOrdering()}}>Distance</p>
-          <p className="text-left cursor-pointer" onClick={() => {setOrderBy('duration'); toggleOrdering()}}>Duration</p>
+          <p
+            className="text-left col-span-2 cursor-pointer"
+            onClick={() => {
+              setOrderBy('departure_station_name');
+              toggleOrdering();
+            }}
+          >
+            {' '}
+            Start station{' '}
+          </p>
+          <p
+            className="text-left col-span-2 cursor-pointer"
+            onClick={() => {
+              setOrderBy('return_station_name');
+              toggleOrdering();
+            }}
+          >
+            {' '}
+            End station{' '}
+          </p>
+          <p
+            className="text-left cursor-pointer"
+            onClick={() => {
+              setOrderBy('departuredate');
+              toggleOrdering();
+            }}
+          >
+            {' '}
+            Start date{' '}
+          </p>
+          <p
+            className="text-left cursor-pointer"
+            onClick={() => {
+              setOrderBy('returndate');
+              toggleOrdering();
+            }}
+          >
+            {' '}
+            End date{' '}
+          </p>
+          <p
+            className="text-left cursor-pointer"
+            onClick={() => {
+              setOrderBy('distance');
+              toggleOrdering();
+            }}
+          >
+            Distance
+          </p>
+          <p
+            className="text-left cursor-pointer"
+            onClick={() => {
+              setOrderBy('duration');
+              toggleOrdering();
+            }}
+          >
+            Duration
+          </p>
         </li>
       </ul>
-      <ul className="journeys">
+      <JourneysList journeys={journeys} offset={offset} />
+      {/* <ul className="journeys">
         {journeys.map((journey: Journey, i: number) => (
-          <li className="grid grid-cols-9 p-2 border-b" key={journey.id}>
-            <p className="text-left"> {i + 1 + offset}. </p>
-            <p className="text-left col-span-2">
-              {' '}
-              {journey.departure_station_name}
-            </p>
-            <p className="text-left col-span-2">
-              {' '}
-              {journey.return_station_name}
-            </p>
-            <p className="text-left">
-              {dayjs(journey.departuredate).format('DD.MM.YYYY')}
-            </p>
-            <p className="text-left">
-              {dayjs(journey.returndate).format('DD.MM.YYYY')}
-            </p>
-            <p className="text-left">{journey.distance / 1000}km</p>
-            <p className="text-left">
-              {Math.floor(journey.duration / (60*60*24)) +
-                'vrk ' +
-                Math.floor(journey.duration % (60*60*24)/(60*60)) +
-                'h ' +
-                (Math.floor(journey.duration % (60*60)/60)) +
-                'min ' +
-                (journey.duration % 60)
-                }
-              s
-            </p>
-          </li>
+          <JourneyItem key={journey.id} journey={journey} index={i+1+offset} />
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };
