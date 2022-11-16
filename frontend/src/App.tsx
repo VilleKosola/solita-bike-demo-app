@@ -14,10 +14,7 @@ function App() {
       <Routes>
         <Route path="*" element={<Navigation />}>
           <Route path="journeys" element={<Journeys />} />
-          <Route
-            path="stations"
-            element={<Stations/>}
-          />
+          <Route path="stations" element={<Stations />} />
         </Route>
       </Routes>
     </BrowserRouter>
