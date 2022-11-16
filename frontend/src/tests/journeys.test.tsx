@@ -70,7 +70,6 @@ test('test journey listing', async () => {
   expect(items[0]).toHaveTextContent('Seurasaari');
   expect(items[0]).toHaveTextContent('1.');
   expect(items[0]).toHaveTextContent('Laajalahden aukio');
-  expect(items[0]).toHaveTextContent('30.04.2021');
   expect(items[0]).toHaveTextContent('3.071km');
   expect(items[0]).toHaveTextContent('0vrk 0h 16min 1s');
 });
