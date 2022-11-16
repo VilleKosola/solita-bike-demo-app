@@ -9,7 +9,7 @@ export interface Station {
   city: string;
   stad: string;
   operator: string;
-  capasity: string|number;
+  capasity: string | number;
   x_coordinate: number;
   y_coordinate: number;
 }
