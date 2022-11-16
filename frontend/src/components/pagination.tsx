@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface paginationProps {
-  offsetChange: {(value: number): void};
-  limitChange: {(value: number): void};
+  offsetChange: { (value: number): void };
+  limitChange: { (value: number): void };
   limit: number;
   offset: number;
 }
@@ -16,15 +16,20 @@ const Pagination = (props: paginationProps) => {
     setLimit(value);
     props.offsetChange(0);
     setOffset(0);
-  }
+  };
 
   return (
-    <div className="flex justify-between p-3">
-        <div></div>
+    <div data-testid="pagination-parent" className="flex justify-between p-3">
+      <div></div>
       {offset > 0 ? (
         <div
+          data-testid="offset-previous"
+          id="offset-previous"
           className="font-bold rounded-full bg-black text-white w-7 h-7 flex items-center justify-center cursor-pointer"
-          onClick={() => {props.offsetChange(offset - limit); setOffset(offset - limit)}}
+          onClick={() => {
+            props.offsetChange(offset - limit);
+            setOffset(offset - limit);
+          }}
         >
           {' '}
           <span>{'<'}</span>{' '}
@@ -33,13 +38,17 @@ const Pagination = (props: paginationProps) => {
         <div></div>
       )}
 
-      <div className='text-center'>
+      <div className="text-center">
         {offset} - {offset + limit}
       </div>
 
       <div
+        data-testid="offset-next"
         className="font-bold rounded-full bg-black text-white w-7 h-7 flex items-center justify-center cursor-pointer"
-        onClick={() => {props.offsetChange(offset + limit); setOffset(offset + limit)}}
+        onClick={() => {
+          props.offsetChange(offset + limit);
+          setOffset(offset + limit);
+        }}
       >
         {' '}
         {'>'}{' '}
@@ -47,8 +56,9 @@ const Pagination = (props: paginationProps) => {
       <div>
         <select
           value={limit}
+          data-testid="limit-select"
           onChange={(e) => {
-            limitselection(Number(e.target.value))
+            limitselection(Number(e.target.value));
           }}
         >
           <option value={10}>10</option>
