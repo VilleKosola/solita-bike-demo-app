@@ -1,50 +1,15 @@
-import { Request, Response } from "express";
-import { Pool } from 'pg';
-
-  const client: Pool = new Pool({
-    user: 'bikeapp',
-    host: 'localhost',
-    database: 'bikeapp',
-    password: 'bikeapp',
-    port: 5432,
-  })
+import * as db from '../db/index'
   
-  export function getStations(request: Request, response: Response){
-    let limit = request.query.limit || '100';
-    let offset = request.query.offset || '0';
-    let orderBy = request.query.orderby || 'nimi';
-    let ordering = request.query.ordering || 'ASC';
-    return client.query(`SELECT * FROM station ORDER BY ${orderBy} ${ordering} LIMIT ${limit} OFFSET ${offset}`, (error: Error, results) => {
-      if (error) {
-        return response.status(500).json(error.message)
-      } else {
-        response.status(200).json(results.rows)
-      }
-    })  
+  export async function queryStations(params: {limit:string, offset:string, orderBy:string, ordering:string}){
+      return db.query(`SELECT * FROM station ORDER BY ${params.orderBy} ${params.ordering} LIMIT ${params.limit} OFFSET ${params.offset}`);
   }
   
-  export function getJourneyCount(request: Request, response: Response) {
-    return client.query('SELECT COUNT(*) FROM journey', (error, results) => {
-      if (error) {
-        return response.status(500).json(error.message)
-      } else {
-        response.status(200).json(results.rows)
-      }
-    })
+  export function queryJourneyCount() {
+    return db.query('SELECT COUNT(*) FROM journey');
   }
   
-  export function getJourneys(request: Request, response: Response){
-    let limit = request.query.limit || '100';
-    let offset = request.query.offset || '0';
-    let orderBy = request.query.orderby || 'departuredate';
-    let ordering = request.query.ordering || 'ASC';
-    return client.query(`SELECT * FROM journey ORDER BY ${orderBy} ${ordering} LIMIT ${limit} OFFSET ${offset}`, (error, results) => {
-      if (error) {
-        return response.status(500).json(error.message)
-      } else {
-        response.status(200).json(results.rows)
-      }      
-    })     
+  export function queryJourneys(params: {limit:string, offset:string, orderBy:string, ordering:string}){
+    return db.query(`SELECT * FROM journey ORDER BY ${params.orderBy} ${params.ordering} LIMIT ${params.limit} OFFSET ${params.offset}`);
   }
 
 

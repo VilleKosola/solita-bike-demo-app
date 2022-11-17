@@ -1,7 +1,7 @@
 import express, { Express } from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import * as db from './queries';
+import * as service from './service';
 import cors from 'cors';
 
 const app: Express = express();
@@ -24,9 +24,9 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 app.use(express.json());
 
-app.get('/station', db.getStations)
-app.get('/journey', db.getJourneys)
-app.get('/journey-count', db.getJourneyCount)
+app.get('/station', service.getStations)
+app.get('/journey', service.getJourneys)
+app.get('/journey-count', service.getJourneyCount)
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
