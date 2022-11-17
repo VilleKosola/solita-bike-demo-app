@@ -14,4 +14,4 @@
 ## Running
     - Start and init the database with `docker-compose up --build`.
     - Start backend by running `npm i` and `npm start` in backend folder
-    - 
+    - Start frontend by running `npm i` and `npm start` in frontend folder
