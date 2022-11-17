@@ -1,7 +1,7 @@
 import { Journey } from '../types/journey';
 import JourneyItem from '../components/journey-item';
 
-const JourneysList = (props: { journeys: Journey[]; offset: number }) => {
+const JourneysList = (props: { journeys: Journey[], offset: number }) => {
   return (
     <ul className="journeys">
       {props.journeys.map((journey: Journey, i: number) => (
