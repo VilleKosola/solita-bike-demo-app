@@ -27,7 +27,8 @@ app.use(cors(options));
 app.use(express.json());
 
 
-app.get('/station', service.getStations)
+app.get('/stations', service.getStations)
+app.get('/station/stats/:id', service.getStationStatistics)
 app.post('/stations', service.getStationsByIds)
 
 app.get('/journey', service.getJourneys)
