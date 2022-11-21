@@ -6,7 +6,7 @@ const getAllStations = async (p: {
 }) => {
   try {
     const response = fetch(
-      `http://localhost:3002/station?` +
+      `http://localhost:3002/stations?` +
         new URLSearchParams({
           limit: p.limit.toString(),
           offset: p.offset.toString(),
@@ -21,7 +21,7 @@ const getAllStations = async (p: {
 };
 
 const getStationsById = async (p: string[]) => {
-  const body = JSON.stringify({stationIds: p});
+  const body = JSON.stringify(p);
   try {
     const response = fetch(
       `http://localhost:3002/stations`,
@@ -39,4 +39,15 @@ const getStationsById = async (p: string[]) => {
   }
 };
 
-export { getAllStations, getStationsById };
+const getStationStatistics = async (id: string) => {
+  try {
+    const response = fetch(
+      `http://localhost:3002/station/stats/${id}`,
+    );
+    return (await response).json();
+  } catch (error) {
+    return [];
+  }
+};
+
+export { getAllStations, getStationsById, getStationStatistics };

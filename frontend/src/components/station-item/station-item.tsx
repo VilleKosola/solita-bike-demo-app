@@ -1,6 +1,7 @@
 import React from 'react';
 import { Station } from '../../types/station';
 import LeafletMap from '../map/map';
+import StationStats from '../station-stats/station-stats';
 
 const StationItem = (props: {
   station: Station;
@@ -27,16 +28,19 @@ const StationItem = (props: {
         <p className="text-left">{station.y_coordinate}</p>
       </li>
       {props.active && (
-        <LeafletMap
-          locations={[
-            {
-              x: station.x_coordinate,
-              y: station.y_coordinate,
-              name: station.nimi,
-              id: station.fid,
-            },
-          ]}
-        />
+        <div>
+          <StationStats station={station} ></StationStats>
+          <LeafletMap
+            locations={[
+              {
+                x: station.x_coordinate,
+                y: station.y_coordinate,
+                name: station.nimi,
+                id: station.fid,
+              },
+            ]}
+          />
+        </div>
       )}
     </>
   );

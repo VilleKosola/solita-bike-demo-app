@@ -16,7 +16,6 @@ const Journeys = () => {
   };
 
   React.useEffect(() => {
-    console.log('fetching from:', offset);
     getAllJourneys({ limit, offset, orderby, ordering }).then((data) =>
       setJourneys(data)
     );
