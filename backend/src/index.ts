@@ -19,12 +19,17 @@ app.use(
 const allowedOrigins = ['http://localhost:3001'];
 
 const options: cors.CorsOptions = {
-  origin: allowedOrigins
+  origin: allowedOrigins,
+  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
+  methods: 'GET, POST, PUT, DELETE'
 };
 app.use(cors(options));
 app.use(express.json());
 
+
 app.get('/station', service.getStations)
+app.post('/stations', service.getStationsByIds)
+
 app.get('/journey', service.getJourneys)
 app.get('/journey-count', service.getJourneyCount)
 

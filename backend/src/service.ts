@@ -1,12 +1,19 @@
 import { Request, Response } from "express";
-import { queryJourneyCount, queryJourneys, queryStations } from "./queries";
+import { queryJourneyCount, queryJourneys, queryStations, queryStationsByIds } from "./queries";
 
-export async function getStations(request: Request, response: Response){
+  export async function getStations(request: Request, response: Response){
     const limit = (request.query.limit || '100') as string;
     const offset = (request.query.offset || '0') as string;
     const orderBy = (request.query.orderby || 'nimi') as string;
     const ordering = (request.query.ordering || 'ASC') as string;
     return await queryStations({limit, offset, orderBy, ordering})
+    .then((res) => response.status(200).json(res))
+    .catch((err) => response.status(500).json(err.message)) 
+  }
+
+  export async function getStationsByIds(request: Request, response: Response) {
+    console.log('getting stations', request.body)
+    return await queryStationsByIds(request.body.join(', '))
     .then((res) => response.status(200).json(res))
     .catch((err) => response.status(500).json(err.message)) 
   }
