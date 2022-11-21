@@ -1,3 +1,4 @@
+import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 interface Location {
@@ -8,12 +9,19 @@ interface Location {
 }
 
 const LeafletMap = (props: { locations: Location[] }) => {
-  const il = props.locations[0] ?? {x: 24, y: 60, name: 'placeholder', id: 123};
+  const [locations, setLocations] = React.useState([props.locations[0] ?? {x: 24.95, y: 60.21, name: 'placeholder', id: 123}] as Location[]);
+  
+  React.useEffect(() => {
+    if (props.locations?.length) {
+      setLocations(props.locations)
+    }
+  }, [props.locations]);
+
   return (
     <MapContainer
       preferCanvas={true}
-      center={[il.y, il.x]}
-      zoom={13}
+      center={[locations[0].y, locations[0].x]}
+      zoom={10}
       scrollWheelZoom={true}
       style={{ height: '250px', width: '100vw' }}
     >
@@ -21,7 +29,7 @@ const LeafletMap = (props: { locations: Location[] }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {props.locations.map((l) => (
+      {locations.map((l) => (
         <Marker position={[l.y, l.x]} key={l.id}>
           <Popup>{l.name}</Popup>
         </Marker>
