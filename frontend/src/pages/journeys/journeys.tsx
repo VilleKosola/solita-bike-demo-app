@@ -1,12 +1,12 @@
 import React from 'react';
-import { Station } from '../types/station';
-import Pagination from '../components/pagination';
-import { getAllStations } from '../services/StationService';
-import StationList from '../components/stations-list';
+import { Journey } from '../../types/journey';
+import Pagination from '../../components/pagination/pagination';
+import { getAllJourneys } from '../../services/JourneysService';
+import JourneysList from '../../components/journeys-list/journeys-list';
 
-const Stations = () => {
-  const [stations, setStations] = React.useState([] as Station[]);
-  const [orderby, setOrderBy] = React.useState('nimi');
+const Journeys = () => {
+  const [journeys, setJourneys] = React.useState([] as Journey[]);
+  const [orderby, setOrderBy] = React.useState('');
   const [limit, setLimit] = React.useState(100);
   const [offset, setOffset] = React.useState(0);
   const [ordering, setOrdering] = React.useState('ASC');
@@ -16,8 +16,9 @@ const Stations = () => {
   };
 
   React.useEffect(() => {
-    getAllStations({ limit, offset, orderby, ordering }).then((data) =>
-      setStations(data)
+    console.log('fetching from:', offset);
+    getAllJourneys({ limit, offset, orderby, ordering }).then((data) =>
+      setJourneys(data)
     );
   }, [orderby, limit, offset, ordering]);
 
@@ -35,68 +36,71 @@ const Stations = () => {
           <p
             className="text-left col-span-2 cursor-pointer"
             onClick={() => {
-              setOrderBy('nimi');
+              setOrderBy('departure_station_name');
               toggleOrdering();
             }}
           >
             {' '}
-            Name{' '}
+            Start station{' '}
           </p>
           <p
             className="text-left col-span-2 cursor-pointer"
             onClick={() => {
-              setOrderBy('osoite');
+              setOrderBy('return_station_name');
               toggleOrdering();
             }}
           >
             {' '}
-            Address{' '}
+            End station{' '}
           </p>
           <p
             className="text-left cursor-pointer"
             onClick={() => {
-              setOrderBy('city');
+              setOrderBy('departuredate');
               toggleOrdering();
             }}
           >
             {' '}
-            City{' '}
+            Start date{' '}
           </p>
           <p
             className="text-left cursor-pointer"
             onClick={() => {
-              setOrderBy('operator');
+              setOrderBy('returndate');
               toggleOrdering();
             }}
           >
             {' '}
-            Operator{' '}
+            End date{' '}
           </p>
           <p
             className="text-left cursor-pointer"
             onClick={() => {
-              setOrderBy('x_coordinate');
+              setOrderBy('distance');
               toggleOrdering();
             }}
           >
-            {' '}
-            X-coordinate{' '}
+            Distance
           </p>
           <p
             className="text-left cursor-pointer"
             onClick={() => {
-              setOrderBy('y_coordinate');
+              setOrderBy('duration');
               toggleOrdering();
             }}
           >
-            {' '}
-            Y-coordinate{' '}
+            Duration
           </p>
         </li>
       </ul>
-      <StationList stations={stations} offset={offset} />
+      <JourneysList journeys={journeys} offset={offset} />
+      {/* <ul className="journeys">
+        {journeys.map((journey: Journey, i: number) => (
+          <JourneyItem key={journey.id} journey={journey} index={i+1+offset} />
+        ))}
+      </ul> */}
     </div>
   );
 };
 
-export default Stations;
+export default Journeys;

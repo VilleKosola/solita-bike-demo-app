@@ -8,7 +8,7 @@ interface Location {
 }
 
 const LeafletMap = (props: { locations: Location[] }) => {
-  const il = props.locations[0];
+  const il = props.locations[0] ?? {x: 24, y: 60, name: 'placeholder', id: 123};
   return (
     <MapContainer
       preferCanvas={true}

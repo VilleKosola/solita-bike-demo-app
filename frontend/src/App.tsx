@@ -1,8 +1,8 @@
 import './App.css';
-import Journeys from './pages/journeys';
+import Journeys from './pages/journeys/journeys';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navigation from './pages/navigation';
-import Stations from './pages/stations';
+import Stations from './pages/navigation/stations';
 
 function App() {
   return (

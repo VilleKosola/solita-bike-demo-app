@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import JourneysList from '../components/journeys-list';
-import { Journey } from '../types/journey';
+import JourneysList from './journeys-list';
+import { Journey } from '../../types/journey';
 
 const journeys: Journey[] = [
   {

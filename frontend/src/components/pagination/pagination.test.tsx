@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Pagination from '../components/pagination';
+import Pagination from './pagination';
 
 test('test no previous exists button if offset is 0', () => {
   render(

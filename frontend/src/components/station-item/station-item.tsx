@@ -1,6 +1,6 @@
 import React from 'react';
-import { Station } from '../types/station';
-import LeafletMap from './map';
+import { Station } from '../../types/station';
+import LeafletMap from '../map/map';
 
 const StationItem = (props: {
   station: Station;
