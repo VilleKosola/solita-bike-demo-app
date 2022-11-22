@@ -22,7 +22,7 @@ const LeafletMap = (props: { locations: Location[] }) => {
       preferCanvas={true}
       center={[locations[0].y, locations[0].x]}
       zoom={10}
-      scrollWheelZoom={true}
+      scrollWheelZoom={false}
       style={{ height: '250px', width: '100vw' }}
     >
       <TileLayer
