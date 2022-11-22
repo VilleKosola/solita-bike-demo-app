@@ -22,7 +22,7 @@
   "scripts": {
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!@react-leaflet)/\"",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.ts,.jsx,.tsx src",
     "check-format": "npm run lint",
@@ -32,6 +32,7 @@
     "extends": []
   },
   "jest": {
+    "transformIgnorePatterns": ["/node_modules/(?!(@react-leaflet)/)"],
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
