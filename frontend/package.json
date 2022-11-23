@@ -31,12 +31,6 @@
   "eslintConfig": {
     "extends": []
   },
-  "jest": {
-    "transformIgnorePatterns": ["/node_modules/(?!(@react-leaflet)/)"],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
