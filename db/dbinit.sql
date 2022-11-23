@@ -30,43 +30,43 @@ CREATE TABLE journey (
     duration REAL NOT NULL CHECK (duration >= 10)
 );
 
-SET session_replication_role = 'replica';
+-- SET session_replication_role = 'replica';
 
-COPY station(fid, id, nimi, namn, name, osoite, address, city, stad, operator, capasity, x_coordinate, y_coordinate)
-FROM '/var/lib/postgresql/csvs/stations.csv'
-DELIMITER ','
-CSV HEADER;
+-- COPY station(fid, id, nimi, namn, name, osoite, address, city, stad, operator, capasity, x_coordinate, y_coordinate)
+-- FROM '/var/lib/postgresql/csvs/stations.csv'
+-- DELIMITER ','
+-- CSV HEADER;
 
-COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration)
-FROM '/var/lib/postgresql/csvs/2021-05.csv'
-DELIMITER ','
-CSV HEADER
-WHERE distance >= 10 and duration >= 10;
+-- COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration)
+-- FROM '/var/lib/postgresql/csvs/2021-05.csv'
+-- DELIMITER ','
+-- CSV HEADER
+-- WHERE distance >= 10 and duration >= 10;
 
-COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration)
-FROM '/var/lib/postgresql/csvs/2021-06.csv'
-DELIMITER ','
-CSV HEADER
-WHERE distance >= 10 and duration >= 10;
+-- COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration)
+-- FROM '/var/lib/postgresql/csvs/2021-06.csv'
+-- DELIMITER ','
+-- CSV HEADER
+-- WHERE distance >= 10 and duration >= 10;
 
-COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration)
-FROM '/var/lib/postgresql/csvs/2021-07.csv'
-DELIMITER ','
-CSV HEADER
-WHERE distance >= 10 and duration >= 10;
+-- COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration)
+-- FROM '/var/lib/postgresql/csvs/2021-07.csv'
+-- DELIMITER ','
+-- CSV HEADER
+-- WHERE distance >= 10 and duration >= 10;
 
-DELETE FROM journey 
-WHERE departure_station NOT IN (
-  SELECT id FROM station
-);
+-- DELETE FROM journey 
+-- WHERE departure_station NOT IN (
+--   SELECT id FROM station
+-- );
 
-DELETE FROM journey 
-WHERE return_station NOT IN (
-  SELECT id FROM station
-);
+-- DELETE FROM journey 
+-- WHERE return_station NOT IN (
+--   SELECT id FROM station
+-- );
 
-CREATE INDEX idx_journey_id
-ON journey (id);
+-- CREATE INDEX idx_journey_id
+-- ON journey (id);
 
-CREATE INDEX idx_station_id
-ON station (id);
+-- CREATE INDEX idx_station_id
+-- ON station (id);
