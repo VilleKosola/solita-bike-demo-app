@@ -1,17 +1,17 @@
 export interface StationStatistics {
-    id: number;
-    fid: number;
-    nimi: string;
-    name: string;
-    namn: string;
-    osoite: string;
-    address: string;
-    city: string;
-    stad: string;
-    operator: string;
-    capasity: string | number;
-    x_coordinate: number;
-    y_coordinate: number;
+    id: number|string;
+    fid?: number;
+    nimi?: string;
+    name?: string;
+    namn?: string;
+    osoite?: string;
+    address?: string;
+    city?: string;
+    stad?: string;
+    operator?: string;
+    capasity?: string | number;
+    x_coordinate?: number;
+    y_coordinate?: number;
 
     starting_count?: number;
     ending_count?: number;
