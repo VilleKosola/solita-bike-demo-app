@@ -19,16 +19,18 @@ import { StationStatistics } from "./types/Station";
   }
 
   export async function getStationStatistics(request: Request, response: Response) {
-    const from = (request.query.from || '2000-01-01') as string;
-    const to = (request.query.to || '2100-01-01') as string;
+    const from = (request.query.from ?? '2000-01-01') as string;
+    const to = (request.query.to ?? '2022-01-01') as string;
+    const id = request.params.id as string;
+    console.log(from, to)
     try {
-      let station: StationStatistics = await queryStationsByIds(request.params.id as string).then(res => res.rows[0]);
-      station.starting_count = await queryStationStartingCount(station.id.toString(), from, to).then(res => res.rows[0].count);
-      station.ending_count = await queryStationEndingCount(station.id.toString(), from, to).then(res => res.rows[0].count);
-      station.avg_dist_from = await queryStationAvgDistanceFrom(station.id.toString(), from, to).then(res => res.rows[0].avg);
-      station.avg_dist_to = await queryStationAvgDistanceTo(station.id.toString(), from, to).then(res => res.rows[0].avg);
-      station.starting_from_top = await queryStationStartingFromTop(station.id.toString(), from, to).then(res => res.rows);
-      station.ending_to_top = await queryStationEndingToTop(station.id.toString(), from, to).then(res => res.rows);
+      let station: StationStatistics = {id: id};
+      station.starting_count = await queryStationStartingCount(id, from, to).then(res => res.rows[0].count);
+      station.ending_count = await queryStationEndingCount(id, from, to).then(res => res.rows[0].count);
+      station.avg_dist_from = await queryStationAvgDistanceFrom(id, from, to).then(res => res.rows[0].avg);
+      station.avg_dist_to = await queryStationAvgDistanceTo(id, from, to).then(res => res.rows[0].avg);
+      station.starting_from_top = await queryStationStartingFromTop(id, from, to).then(res => res.rows);
+      station.ending_to_top = await queryStationEndingToTop(id, from, to).then(res => res.rows);
       response.status(200).json(station);
     } catch (error: any) {
       return response.status(500).json(error.message);

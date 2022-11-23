@@ -16,36 +16,36 @@ import * as db from '../db/index'
     return db.query(`
     SELECT COUNT(*) 
     FROM journey 
-    WHERE departure_station = ${id}
+    WHERE departure_station = ${id} AND departuredate >= '${from}' AND departuredate <= '${to}'
     `);
   }
-  // AND departuredate >= ${from} AND departuredate <= ${to}
+
   export function queryStationEndingCount(id: string, from: string, to: string){
     return db.query(`
     SELECT COUNT(*) 
     FROM journey 
-    WHERE return_station = ${id}
+    WHERE return_station = ${id} AND departuredate >= '${from}' AND departuredate <= '${to}'
     `);
   }
   export function queryStationAvgDistanceFrom(id: string, from: string, to: string){
     return db.query(`
     SELECT AVG(distance) 
     FROM journey 
-    WHERE departure_station = ${id}
+    WHERE departure_station = ${id} AND departuredate >= '${from}' AND departuredate <= '${to}'
     `);
   }
   export function queryStationAvgDistanceTo(id: string, from: string, to: string){
     return db.query(`
     SELECT AVG(distance) 
     FROM journey 
-    WHERE return_station = ${id}
+    WHERE return_station = ${id} AND departuredate >= '${from}' AND departuredate <= '${to}'
     `);
   }
   export function queryStationStartingFromTop(id: string, from: string, to: string){
     return db.query(`
     SELECT return_station_name, count(return_station) AS NumberOfTrips 
     FROM journey 
-    WHERE departure_station = ${id}
+    WHERE departure_station = ${id} AND departuredate >= '${from}' AND departuredate <= '${to}'
     GROUP BY return_station_name 
     ORDER BY NumberOfTrips 
     DESC 
@@ -56,7 +56,7 @@ import * as db from '../db/index'
     return db.query(`
     SELECT departure_station_name, count(departure_station) AS NumberOfTrips 
     FROM journey 
-    WHERE return_station = ${id}
+    WHERE return_station = ${id} AND departuredate >= '${from}' AND departuredate <= '${to}'
     GROUP BY departure_station_name 
     ORDER BY NumberOfTrips 
     DESC 
