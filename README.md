@@ -12,6 +12,6 @@
     - Place files to data folder in repo root
 
 ## Running
-    - Start and init the database with `docker-compose up --build`.
+    - Start and init the database by running `docker-compose up --build` in repo root.
     - Start backend by running `npm i` and `npm start` in backend folder
     - Start frontend by running `npm i` and `npm start` in frontend folder
