@@ -1,20 +1,34 @@
+import dayjs from 'dayjs';
 import React from 'react';
 import { getStationStatistics } from '../../services/StationService';
 import { StationStatistics } from '../../types/station';
+
+const selections: any[] = [
+    {name: 'All', from:'2018-01-01 00:00', to: '2023-01-01 00:00'},
+    {name: 'May 2021', from:'2021-05-01 00:00', to: '2021-06-01 00:00'},
+    {name: 'June 2021', from:'2021-06-01 00:00', to: '2021-07-01 00:00'},
+    {name: 'July 2021', from:'2021-07-01 00:00', to: '2021-08-01 00:00'},
+    {name: 'August 2021', from:'2021-08-01 00:00', to: '2021-08-01 00:00'},
+
+]
 
 const StationStats = (props: {
   station: StationStatistics;
 }) => {
     const [data, setData] = React.useState(props.station)
+    const [timeFrame, setTimeFrame] = React.useState('All')
 
     React.useEffect(() => {
-        getStationStatistics(props.station.id.toString()).then((d) => {
+        const selection = selections.find(s => s.name === timeFrame)
+        const from = dayjs(selection.from).format('YYYY-MM-DD');
+        const to = dayjs(selection.to).format('YYYY-MM-DD');
+        getStationStatistics(props.station.id.toString(), from, to).then((d) => {
             setData(d)
         });
-      }, [props.station]);
+      }, [props.station, timeFrame]);
 
   return (
-    <div className='grid grid-cols-2'>
+    <div className='grid grid-cols-2 relative'>
         <div className='flex flex-col justify-center mx-auto'>
             <p className='font-bold text-center'>Trips starting from</p>
             <p>Count: {data.starting_count}</p>
@@ -36,6 +50,19 @@ const StationStats = (props: {
                     <li key={item.departure_station_name}>{i+1}. {item.departure_station_name}: {item.numberoftrips}</li>
                 )}
             </ul>
+        </div>
+        <div className='absolute right-5'>
+            <select
+            value={timeFrame}
+            className={'border-solid border-1 border-b-slate-600'}
+            onChange={(e) => {
+                setTimeFrame(e.target.value);
+            }}
+            >
+                {selections.map(s => (
+                    <option key={s.name} value={s.name}>{s.name}</option>
+                ))}
+            </select>
         </div>
     </div>
   );

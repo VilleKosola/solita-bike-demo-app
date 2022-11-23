@@ -39,10 +39,14 @@ const getStationsById = async (p: string[]) => {
   }
 };
 
-const getStationStatistics = async (id: string) => {
+const getStationStatistics = async (id: string, from: string, to: string) => {
   try {
     const response = fetch(
-      `http://localhost:3002/station/stats/${id}`,
+      `http://localhost:3002/station/stats/${id}?` +
+      new URLSearchParams({
+        from: from,
+        to: to
+      }),
     );
     return (await response).json();
   } catch (error) {
