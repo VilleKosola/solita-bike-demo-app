@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import * as service from './service';
 import cors from 'cors';
+import { initData } from './init-db-data';
 
 const app: Express = express();
 const port = process.env.PORT || 3002;
@@ -37,3 +38,5 @@ app.get('/journey-count', service.getJourneyCount)
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })
+
+initData();
