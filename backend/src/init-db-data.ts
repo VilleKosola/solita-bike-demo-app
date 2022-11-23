@@ -201,7 +201,7 @@ function jsonToCsv(items: any[]) {
 }
 
 const initData = async () => {  
-    if (!(await db.query('SELECT * FROM station')).rows.length && !(await db.query('SELECT * FROM journey LIMIT 5')).rows.length) {
+    if (!(await db.query('SELECT * FROM station')).rows.length || !(await db.query('SELECT * FROM journey LIMIT 5')).rows.length) {
         console.time('ImportData Process')
         const files = await getDirFiles();
         console.log('files read',files);
@@ -220,6 +220,7 @@ const initData = async () => {
         console.timeLog('Data parsing', 'stations parsed')
     
         //parse journeys
+        // journeys = files.map()
         for (const fileName of files) {
             const parseResults = await parseJourneysCsv(fileName)
             const j = await parseResults.records as Journey[];
