@@ -19,7 +19,7 @@ const getAllJourneys = async (p: JournalParams) => {
   try {
     const response = fetch(
       `http://localhost:3002/journey?` +
-      getParams(p)
+      getParams({...p})
     );
     return (await response).json();
   } catch (error) {

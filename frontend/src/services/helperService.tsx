@@ -1,10 +1,12 @@
 import * as _ from 'lodash'
 
-const getParams = (paramObject: any) => {
-    const p = _.cloneDeep(paramObject);
-    Object.keys(paramObject).forEach(key => {
-        p[key] = paramObject[key].toString();
-    })
+type GenericObject = { [key: string]: string | number };
+
+const getParams = (paramObject: GenericObject) => {
+    const p = _.cloneDeep(paramObject) as Record<string, string>;
+    Object.entries(paramObject).forEach(([key, value]) => {
+        p[key] = value.toString();
+    });
     const params = new URLSearchParams(p);
     return params;
 }
