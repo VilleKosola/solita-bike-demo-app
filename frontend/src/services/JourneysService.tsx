@@ -1,18 +1,25 @@
-const getAllJourneys = async (p: {
-  limit: number;
-  offset: number;
-  orderby: string;
-  ordering: string;
-}) => {
+import { getParams } from "./helperService";
+
+export interface JournalParams {
+  limit:number, 
+  offset:number, 
+  orderby:string, 
+  ordering:string, 
+  startStationName: string, 
+  endStationName: string, 
+  from: string, 
+  to: string, 
+  minDist: number, 
+  maxDist: number, 
+  minDur: number, 
+  maxDur: number
+}
+
+const getAllJourneys = async (p: JournalParams) => {
   try {
     const response = fetch(
       `http://localhost:3002/journey?` +
-        new URLSearchParams({
-          limit: p.limit.toString(),
-          offset: p.offset.toString(),
-          orderby: p.orderby,
-          ordering: p.ordering,
-        })
+      getParams(p)
     );
     return (await response).json();
   } catch (error) {

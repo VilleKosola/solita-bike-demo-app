@@ -1,3 +1,5 @@
+import { getParams } from "./helperService";
+
 const getAllStations = async (p: {
   limit: number;
   offset: number;
@@ -7,12 +9,7 @@ const getAllStations = async (p: {
   try {
     const response = fetch(
       `http://localhost:3002/stations?` +
-        new URLSearchParams({
-          limit: p.limit.toString(),
-          offset: p.offset.toString(),
-          orderby: p.orderby,
-          ordering: p.ordering,
-        })
+        getParams(p)
     );
     return (await response).json();
   } catch (error) {
@@ -43,10 +40,7 @@ const getStationStatistics = async (id: string, from: string, to: string) => {
   try {
     const response = fetch(
       `http://localhost:3002/station/stats/${id}?` +
-      new URLSearchParams({
-        from: from,
-        to: to
-      }),
+      getParams({from, to})
     );
     return (await response).json();
   } catch (error) {
