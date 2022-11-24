@@ -11,18 +11,30 @@ const Journeys = () => {
   const [offset, setOffset] = React.useState(0);
   const [ordering, setOrdering] = React.useState('ASC');
 
+  const [endStationName, setEndStationName] = React.useState('');
+  const [startStationName, setStartStationName] = React.useState('');
+  const [from, setFrom] = React.useState('2018-01-01 00:00');
+  const [to, setTo] = React.useState('2022-01-01 00:00');
+  const [minDist, setMinDist] = React.useState(0);
+  const [maxDist, setMaxDist] = React.useState(99999999999);
+  const [minDur, setMinDur] = React.useState(0);
+  const [maxDur, setMaxDur] = React.useState(99999999999);
+
   const toggleOrdering = () => {
     setOrdering(ordering === 'ASC' ? 'DESC' : 'ASC');
   };
 
   React.useEffect(() => {
-    getAllJourneys({ limit, offset, orderby, ordering }).then((data) =>
+    getAllJourneys({ limit, offset, orderby, ordering, endStationName, startStationName, from, to, minDist, maxDist, minDur, maxDur }).then((data) =>
       setJourneys(data)
     );
-  }, [orderby, limit, offset, ordering]);
+  }, [orderby, limit, offset, ordering, endStationName, startStationName, from, to, minDist, maxDist, minDur, maxDur]);
 
   return (
     <div>
+      <div>
+
+      </div>
       <Pagination
         limit={limit}
         offset={offset}
