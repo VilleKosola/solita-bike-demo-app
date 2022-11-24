@@ -31,7 +31,7 @@ const validStationData = (station: Station) => {
 }
 const validJourneyData = (journey: Journey) => {
     const ISO_8601_FULL = /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(([+-]\d\d:\d\d)|Z)?$/i
-    if (!journey.return_station || !journey.departure_station || journey.distance < 10 || journey.duration < 10) {
+    if (!journey.return_station || !journey.departure_station || Number(journey.distance) < 10 || Number(journey.duration) < 10) {
         return false;
     } else if (journey.departuredate.length < 18 || journey.returndate.length < 18 || !ISO_8601_FULL.test(journey.departuredate) || !ISO_8601_FULL.test(journey.returndate)) {
         return false;
@@ -70,28 +70,7 @@ const parseStationsFile = async (fileName: string) => {
         let record; 
         while ((record = parser.read()) !== null) {
                 if (validStationData(record)) {
-                    const s: Station = {
-                        fid: Number(record.fid),
-                        id: record.id,
-                        nimi: record.nimi,
-                        namn: record.namn,
-                        name: record.name,
-                        osoite: record.osoite,
-                        address: record.address,
-                        city: record.city,
-                        stad: record.stad,
-                        operator: record.operator,
-                        capasity: record.capasity,
-                        x_coordinate: record.x_coordinate,
-                        y_coordinate: record.y_coordinate
-                    } 
-                    //insert data to db
-                    await insertDataToTable([s], 
-                        `INSERT INTO station(fid, id, nimi, namn, name, osoite, address, city, stad, operator, capasity, x_coordinate, y_coordinate) 
-                        VALUES %L
-                        RETURNING *`
-                    )
-                    records.push(s);
+                    records.push(record);
                 } else {
                     rejectedRecords.push(record)
                 }
@@ -110,18 +89,8 @@ const parseJourneysCsv = async (fileName: string) => {
         let index = 0;
         let record; 
         while ((record = parser.read()) !== null) {
-                const j: Journey = { 
-                    departuredate: record.departuredate, 
-                    returndate: record.returndate,
-                    departure_station: record.departure_station,
-                    departure_station_name: record.departure_station_name,
-                    return_station: record.return_station,
-                    return_station_name: record.return_station_name,
-                    distance: Number(record.distance),
-                    duration: Number(record.duration), 
-                }
-                if (validJourneyData(j)) {
-                    records.push(j);
+                if (validJourneyData(record)) {
+                    records.push(record);
                 } else {
                     rejectedRecords.push({...record})
                 }
@@ -140,12 +109,17 @@ const insertDataToTable = async (data: any[], text: string) => {
     try {
         return await db.query(format(text, values))  
     } catch (error) {
-        console.log('insert failed', data)
+        console.log('insert failed', data.length)
     }
 }
 
 const copyCsvToPG = async (csv: string) => {
-    db.queryWithCopy("COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration) FROM STDIN DELIMITER ',' CSV HEADER", csv);//'src/dataTemp.csv');
+    db.queryWithCopy(`
+    COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration) 
+    FROM STDIN 
+    DELIMITER ',' 
+    CSV HEADER`, 
+    csv);
 }
 
 const createTables = async () => {
@@ -218,17 +192,22 @@ const initData = async () => {
         stations = parseResult.records as Station[];
         rejections.push(parseResult.rejectedRecords);
         console.timeLog('Data parsing', 'stations parsed')
+        // add stations to db
+        await insertDataToTable(stations, 
+            `INSERT INTO station(fid, id, nimi, namn, name, osoite, address, city, stad, operator, capasity, x_coordinate, y_coordinate) 
+            VALUES %L
+            RETURNING *`
+        )
     
         //parse journeys
-        // journeys = files.map()
-        for (const fileName of files) {
+        journeys = _.flatten(await Promise.all(files.map(async fileName => {
             const parseResults = await parseJourneysCsv(fileName)
-            const j = await parseResults.records as Journey[];
+            const j = parseResults.records as Journey[];
             rejections.push(parseResults.rejectedRecords);
             console.timeLog('Data parsing', 'journey file parsed: ', fileName)
-            journeys = [...journeys, ...j];
-        }
-        console.log('Data parsed', `journeys: ${journeys.length}`, `stations: ${stations.length}`, `rejected count: ${_.flatten(rejections).length}`)
+            return j;
+        })))
+        console.log('Data parsed', `journeys: ${journeys.length}`, `stations: ${stations.length}`, `rejected stations: ${rejections[0].length}`, `rejected journeys: ${rejections[1].length}`)
         console.timeEnd('Data parsing')
 
         //parse journeys back to csv for speed
