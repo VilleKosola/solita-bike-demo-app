@@ -48,7 +48,19 @@ import { StationStatistics } from "./types/Station";
     const offset = (request.query.offset || '0') as string;
     const orderBy = (request.query.orderby || 'id') as string;
     const ordering = (request.query.ordering || 'ASC') as string;
-    return await queryJourneys({limit, offset, orderBy, ordering})
+
+    const q = request.query;
+
+    const endStationName = q.endStationName as string;
+    const startStationName = q.startStationName as string;
+    const from = (q.from ?? '2000-01-01') as string;
+    const to = (q.to ?? '2022-01-01') as string;
+    const minDist = (q.mindist ?? '0') as string;
+    const maxDist = (q.maxdist ?? '9999999999') as string;
+    const minDur = (q.mindur ?? '0') as string;
+    const maxDur = (q.maxdur ?? '9999999999999') as string;
+
+    return await queryJourneys({limit, offset, orderBy, ordering}, {endStationName, startStationName}, {from, to, minDist, maxDist, minDur, maxDur})
     .then((res) => response.status(200).json(res?.rows))
     .catch((err) => response.status(500).json(err.message))     
   }

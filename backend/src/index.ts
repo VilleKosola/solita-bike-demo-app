@@ -6,7 +6,7 @@ import cors from 'cors';
 import { initData } from './init-db-data';
 
 const app: Express = express();
-const port = process.env.PORT || 3002;
+const port = process.env['PORT'] || 3002;
 
 dotenv.config();
 

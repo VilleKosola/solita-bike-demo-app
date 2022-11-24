@@ -1,4 +1,24 @@
 import * as db from '../db/index'
+import { select, like, between } from 'sql-bricks'
+
+interface JournalParams {
+  limit:string, 
+  offset:string, 
+  orderBy:string, 
+  ordering:string, 
+}
+interface SearchParams {
+  startStationName?: string, 
+  endStationName?: string, 
+}
+interface FilterParams {
+  from:string, 
+  to: string, 
+  minDist: string, 
+  maxDist: string, 
+  minDur: string, 
+  maxDur: string
+}
   
   export async function queryStations(params: {limit:string, offset:string, orderBy:string, ordering:string}){
       return db.query(`SELECT * FROM station ORDER BY ${params.orderBy} ${params.ordering} LIMIT ${params.limit} OFFSET ${params.offset}`);
@@ -65,8 +85,19 @@ import * as db from '../db/index'
   }
 
   
-  export function queryJourneys(params: {limit:string, offset:string, orderBy:string, ordering:string}){
-    return db.query(`SELECT * FROM journey ORDER BY ${params.orderBy} ${params.ordering} LIMIT ${params.limit} OFFSET ${params.offset}`);
+  export function queryJourneys(params: JournalParams, searchParams: SearchParams, fp:FilterParams){
+    let query = select().from('journey').orderBy(`${params.orderBy} ${params.ordering}`);
+    if (searchParams.endStationName) {
+      query = query.where(like('return_station_name', `%${searchParams.endStationName}%`))
+    } 
+    if (searchParams.startStationName) {
+      query = query.where(like('departure_station_name', `%${searchParams.startStationName}%`))
+    }
+    query = query.where(between('departuredate', fp.from, fp.to)).and(between('distance', fp.minDist, fp.maxDist)).and(between('duration', fp.minDur, fp.maxDur))
+    let queryString = query.toString();
+    queryString += ` LIMIT ${params.limit} OFFSET ${params.offset}`
+    console.log(queryString)
+    return db.query(queryString);//`SELECT * FROM journey ORDER BY ${params.orderBy} ${params.ordering} LIMIT ${params.limit} OFFSET ${params.offset}`);
   }
 
 
