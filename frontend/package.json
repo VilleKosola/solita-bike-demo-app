@@ -14,6 +14,7 @@
     "dayjs": "^1.11.6",
     "leaflet": "^1.9.2",
     "react": "^18.2.0",
+    "react-datetime-picker": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.1.0",
     "react-scripts": "5.0.1",
@@ -46,6 +47,7 @@
   "devDependencies": {
     "@types/leaflet": "^1.9.0",
     "@types/lodash": "^4.14.190",
+    "@types/react-datetime-picker": "^3.4.1",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
