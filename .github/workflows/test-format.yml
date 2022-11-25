@@ -27,11 +27,20 @@ jobs:
         npm run check-format
         npm run format
         npm test
-    - name: Webhook
-      uses: distributhor/workflow-webhook
+    - name: Get commit hash
+      if: ${{ always() }}
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+      id: slug
+    - name: Chat Setup
+      if: ${{ always() }}
+      uses: DTherHtun/google-chat-action@v0.8
       with:
-        url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-        json: '{ "status": "${{job.status}}"}'
+        project: ${{ github.repository }}
+        commit: ${{ steps.slug.outputs.sha8 }}
+        branch: ${{ github.ref }}
+        status: ${{ job.status }}
+        actionid: ${{ github.repository }}/runs/${{ github.run_id }}
+        webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
 
   TestBackend:
     runs-on: ubuntu-latest
@@ -55,8 +64,17 @@ jobs:
         npm run build --if-present
         npm run lint
         npm run format
-    - name: Webhook
-      uses: distributhor/workflow-webhook
+    - name: Get commit hash
+      if: ${{ always() }}
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+      id: slug
+    - name: Chat Setup
+      if: ${{ always() }}
+      uses: DTherHtun/google-chat-action@v0.8
       with:
-        url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-        json: '{ "status": "${{job.status}}"}'
+        project: ${{ github.repository }}
+        commit: ${{ steps.slug.outputs.sha8 }}
+        branch: ${{ github.ref }}
+        status: ${{ job.status }}
+        actionid: ${{ github.repository }}/runs/${{ github.run_id }}
+        webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
