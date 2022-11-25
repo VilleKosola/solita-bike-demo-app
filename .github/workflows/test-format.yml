@@ -37,7 +37,7 @@ jobs:
       with:
         project: ${{ github.repository }}
         commit: ${{ steps.slug.outputs.sha8 }}
-        branch: ${{ github.ref }}
+        branch: 'Frontend'
         status: ${{ job.status }}
         actionid: ${{ github.repository }}/runs/${{ github.run_id }}
         webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
@@ -74,7 +74,7 @@ jobs:
       with:
         project: ${{ github.repository }}
         commit: ${{ steps.slug.outputs.sha8 }}
-        branch: ${{ github.ref }}
+        branch: 'Backend'
         status: ${{ job.status }}
         actionid: ${{ github.repository }}/runs/${{ github.run_id }}
         webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
