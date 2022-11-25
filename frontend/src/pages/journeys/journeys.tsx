@@ -3,6 +3,9 @@ import { Journey } from '../../types/journey';
 import Pagination from '../../components/pagination/pagination';
 import { getAllJourneys } from '../../services/JourneysService';
 import JourneysList from '../../components/journeys-list/journeys-list';
+import TimeFilter from '../../components/time-filter/time-filter';
+import DistFilter from '../../components/dist-filter/dist-filter';
+import DurFilter from '../../components/dur-filter/dur-filter';
 
 const Journeys = () => {
   const [journeys, setJourneys] = React.useState([] as Journey[]);
@@ -13,27 +16,32 @@ const Journeys = () => {
 
   const [endStationName, setEndStationName] = React.useState('');
   const [startStationName, setStartStationName] = React.useState('');
-  const [from, setFrom] = React.useState('2018-01-01 00:00');
-  const [to, setTo] = React.useState('2022-01-01 00:00');
+  const [from, setFrom] = React.useState(new Date('2021-04-01 00:00'));
+  const [to, setTo] = React.useState(new Date('2021-09-01 00:00'));
   const [minDist, setMinDist] = React.useState(0);
-  const [maxDist, setMaxDist] = React.useState(99999999999);
+  const [maxDist, setMaxDist] = React.useState(100);
   const [minDur, setMinDur] = React.useState(0);
-  const [maxDur, setMaxDur] = React.useState(99999999999);
+  const [maxDur, setMaxDur] = React.useState(1000000);
 
   const toggleOrdering = () => {
     setOrdering(ordering === 'ASC' ? 'DESC' : 'ASC');
   };
 
   React.useEffect(() => {
-    getAllJourneys({ limit, offset, orderby, ordering, endStationName, startStationName, from, to, minDist, maxDist, minDur, maxDur }).then((data) =>
-      setJourneys(data)
-    );
+    const getData = setTimeout(() => {
+      getAllJourneys({ limit, offset, orderby, ordering, endStationName, startStationName, from: from.toISOString(), to: to.toISOString(), minDist:minDist*1000, maxDist: maxDist*1000, minDur, maxDur }).then((data) =>
+        setJourneys(data)
+      )}, 500)
+
+    return () => clearTimeout(getData)
   }, [orderby, limit, offset, ordering, endStationName, startStationName, from, to, minDist, maxDist, minDur, maxDur]);
 
   return (
     <div>
-      <div>
-
+      <div className='flex flex-wrap justify-between align-middle'>
+        <TimeFilter fromChange={setFrom} toChange={setTo} from={from} to={to} showDate={true} showTime={false} ></TimeFilter>
+        <DistFilter minChange={setMinDist} maxChange={setMaxDist} min={minDist} max={maxDist} ></DistFilter>
+        <DurFilter minChange={setMinDur} maxChange={setMaxDur} min={minDur} max={maxDur}></DurFilter>
       </div>
       <Pagination
         limit={limit}
