@@ -28,7 +28,7 @@ jobs:
         npm run format
         npm test
     - name: Google Chat Notification
-      uses: colpal/actions-google-chat-notification@releases/v1
+      uses: colpal/actions-google-chat-notification
       with:
         name: Build
         url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
@@ -58,7 +58,7 @@ jobs:
         npm run lint
         npm run format
     - name: Google Chat Notification
-      uses: colpal/actions-google-chat-notification@releases/v1
+      uses: colpal/actions-google-chat-notification
       with:
         name: Build
         url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
