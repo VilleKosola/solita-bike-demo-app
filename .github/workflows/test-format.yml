@@ -27,6 +27,13 @@ jobs:
         npm run check-format
         npm run format
         npm test
+    - name: Google Chat Notification
+      uses: colpal/actions-google-chat-notification@releases/v1
+      with:
+        name: Build
+        url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+        status: ${{ job.status }}
+      if: always()
 
   TestBackend:
     runs-on: ubuntu-latest
@@ -50,3 +57,10 @@ jobs:
         npm run build --if-present
         npm run lint
         npm run format
+    - name: Google Chat Notification
+      uses: colpal/actions-google-chat-notification@releases/v1
+      with:
+        name: Build
+        url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+        status: ${{ job.status }}
+      if: always()
