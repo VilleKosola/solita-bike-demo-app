@@ -1,5 +1,4 @@
 import React from 'react';
-import { getAllStations } from '../../services/StationService';
 import { Station } from '../../types/station';
 
 interface SearchbarProps {
@@ -12,15 +11,19 @@ const Searchbar = (props: SearchbarProps) => {
   const [searchString, setsearchString] = React.useState(props.searchString);
   const [results, setResults] = React.useState([] as JSX.Element[]);
 
-  const filterFn = (s: Station) => {
-    return searchString !== '' && [s.name, s.nimi, s.namn].some(n => n.includes(searchString) && n.toLowerCase() !== searchString.toLowerCase());
-  }
-
   React.useEffect( () => { 
-    setResults(props.stations.filter(s => filterFn(s)).map(s => (
-      <a data-testid="search-item" key={s.id} onClick={(e) => setsearchString(s.nimi)}>{s.name}</a>
-    )))
-  }, [searchString, props.stations])
+    const filterFn = (s: Station) => {
+      return searchString !== '' && [s.name, s.nimi, s.namn].some(n => n.includes(searchString) && n.toLowerCase() !== searchString.toLowerCase());
+    }
+
+    const getData = setTimeout(() => {
+      setResults(props.stations.filter(s => filterFn(s)).map(s => (
+        <span data-testid="search-item" key={s.id} onClick={(e) => {setsearchString(s.nimi); props.searchStringChange(s.nimi)}}>{s.name}</span>
+      )))
+    }, 500)
+    return () => clearTimeout(getData)
+
+  }, [searchString, props])
 
   return (
     <div data-testid="searchbar-parent" className="flex relative justify-center searchbar-parent pl-3">

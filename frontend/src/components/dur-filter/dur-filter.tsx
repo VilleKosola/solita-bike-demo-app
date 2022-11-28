@@ -16,12 +16,10 @@ const DurFilter = (props: DurFilterProps) => {
     if (type === 'min') {
       setMinDur(_.assign(minDur, time))
       const timeInSeconds = minDur.days*24*60*60 + minDur.hours*60*60 + minDur.minutes*60;
-      console.log(time, minDur, timeInSeconds)
       props.minChange(timeInSeconds);
     } else if(type === 'max'){
       setMaxDur(_.assign(maxDur, time))
       const timeInSeconds = maxDur.days*24*60*60 + maxDur.hours*60*60 + maxDur.minutes*60;
-      console.log(time, maxDur, timeInSeconds)
       props.maxChange(timeInSeconds);
     }
   }
