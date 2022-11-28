@@ -12,7 +12,7 @@ const StationList = (props: { stations: Station[]; offset: number }) => {
           key={station.id}
           station={station}
           index={i + 1 + props.offset}
-          active={active === station.id.toString()}
+          active={active === station.id.toString() || props.stations.length === 1}
           setActive={(id: string) =>
             id === active ? setActive('') : setActive(id)
           }

@@ -5,6 +5,7 @@ const getAllStations = async (p: {
   offset: number;
   orderby: string;
   ordering: string;
+  stationName?: string
 }) => {
   try {
     const response = fetch(

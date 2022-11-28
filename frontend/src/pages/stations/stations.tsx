@@ -3,6 +3,7 @@ import { Station } from '../../types/station';
 import Pagination from '../../components/pagination/pagination';
 import { getAllStations } from '../../services/StationService';
 import StationList from '../../components/stations-list/stations-list';
+import Searchbar from '../../components/searchbar/searchbar';
 
 const Stations = () => {
   const [stations, setStations] = React.useState([] as Station[]);
@@ -10,25 +11,29 @@ const Stations = () => {
   const [limit, setLimit] = React.useState(100);
   const [offset, setOffset] = React.useState(0);
   const [ordering, setOrdering] = React.useState('ASC');
+  const [stationName, setStationName] = React.useState('');
 
   const toggleOrdering = () => {
     setOrdering(ordering === 'ASC' ? 'DESC' : 'ASC');
   };
 
   React.useEffect(() => {
-    getAllStations({ limit, offset, orderby, ordering }).then((data) =>
+    getAllStations({ limit, offset, orderby, ordering, stationName }).then((data) =>
       setStations(data)
     );
-  }, [orderby, limit, offset, ordering]);
+  }, [orderby, limit, offset, ordering, stationName]);
 
   return (
     <div>
-      <Pagination
-        limit={limit}
-        offset={offset}
-        offsetChange={(value: number) => setOffset(value)}
-        limitChange={(value: number) => setLimit(value)}
-      />
+      <div className='flex flex-wrap justify-between items-center'>
+        <Searchbar searchStringChange={setStationName} searchString={stationName} stations={stations} ></Searchbar>
+        <Pagination
+          limit={limit}
+          offset={offset}
+          offsetChange={(value: number) => setOffset(value)}
+          limitChange={(value: number) => setLimit(value)}
+        />
+      </div>
       <ul className="journeys bg-slate-300 font-bold">
         <li className="grid grid-cols-9 p-2 border-b" key={'header'}>
           <p className="text-left"> #. </p>

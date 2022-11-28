@@ -127,11 +127,6 @@ const Journeys = () => {
         </li>
       </ul>
       <JourneysList journeys={journeys} offset={offset} />
-      {/* <ul className="journeys">
-        {journeys.map((journey: Journey, i: number) => (
-          <JourneyItem key={journey.id} journey={journey} index={i+1+offset} />
-        ))}
-      </ul> */}
     </div>
   );
 };
