@@ -72,3 +72,8 @@ code {
   width: 320px;
   height: 35px;
 }
+
+/* set open calendar to be on top */
+.react-date-picker__calendar {
+  z-index: 2 !important;
+}
