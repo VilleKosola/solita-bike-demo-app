@@ -20,8 +20,15 @@ interface FilterParams {
   maxDur: string
 }
   
-  export async function queryStations(params: {limit:string, offset:string, orderBy:string, ordering:string}){
-      return db.query(`SELECT * FROM station ORDER BY ${params.orderBy} ${params.ordering} LIMIT ${params.limit} OFFSET ${params.offset}`);
+  export async function queryStations(params: {limit:string, offset:string, orderBy:string, ordering:string, stationname: string}){
+      return db.query(`
+      SELECT * 
+      FROM station 
+      WHERE nimi LIKE '%${params.stationname}%'
+      ORDER BY ${params.orderBy} ${params.ordering} 
+      LIMIT ${params.limit} 
+      OFFSET ${params.offset}
+      `);
   }
   
   export function queryJourneyCount() {

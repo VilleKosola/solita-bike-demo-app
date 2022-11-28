@@ -7,7 +7,8 @@ import { StationStatistics } from "./types/Station";
     const offset = (request.query.offset || '0') as string;
     const orderBy = (request.query.orderby || 'nimi') as string;
     const ordering = (request.query.ordering || 'ASC') as string;
-    return await queryStations({limit, offset, orderBy, ordering})
+    const stationname = (request.query.stationName || '') as string;
+    return await queryStations({limit, offset, orderBy, ordering, stationname})
     .then((res) => response.status(200).json(res?.rows))
     .catch((err) => response.status(500).json(err.message)) 
   }
