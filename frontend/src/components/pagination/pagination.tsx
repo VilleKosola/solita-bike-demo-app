@@ -19,7 +19,7 @@ const Pagination = (props: paginationProps) => {
   };
 
   return (
-    <div data-testid="pagination-parent" className="flex justify-between p-3">
+    <div data-testid="pagination-parent" className="flex justify-between p-3 pagination-parent">
       <div></div>
       {offset > 0 ? (
         <div
