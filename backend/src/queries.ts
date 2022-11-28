@@ -1,5 +1,5 @@
 import * as db from '../db/index'
-import { select, like, between } from 'sql-bricks'
+import { select, like, between, or } from 'sql-bricks'
 
 interface JournalParams {
   limit:string, 
@@ -88,11 +88,11 @@ interface FilterParams {
   export function queryJourneys(params: JournalParams, searchParams: SearchParams, fp:FilterParams){
     let query = select().from('journey').orderBy(`${params.orderBy} ${params.ordering}`);
     if (searchParams.endStationName) {
-      query = query.where(like('return_station_name', `%${searchParams.endStationName}%`))
+      query = query.where(or(like('return_station_name', `%${searchParams.endStationName}%`), like('departure_station_name', `%${searchParams.endStationName}%`)))
     } 
-    if (searchParams.startStationName) {
-      query = query.where(like('departure_station_name', `%${searchParams.startStationName}%`))
-    }
+    // if (searchParams.startStationName) {
+    //   query = query.where(like('departure_station_name', `%${searchParams.startStationName}%`))
+    // }
     query = query.where(between('departuredate', fp.from, fp.to)).and(between('distance', Number(fp.minDist), Number(fp.maxDist))).and(between('duration', fp.minDur, fp.maxDur))
     let queryString = query.toString();
     queryString += ` LIMIT ${params.limit} OFFSET ${params.offset}`
