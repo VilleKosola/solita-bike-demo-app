@@ -6,6 +6,7 @@ import JourneysList from '../../components/journeys-list/journeys-list';
 import TimeFilter from '../../components/time-filter/time-filter';
 import DistFilter from '../../components/dist-filter/dist-filter';
 import DurFilter from '../../components/dur-filter/dur-filter';
+import Searchbar from '../../components/searchbar/searchbar';
 
 const Journeys = () => {
   const [journeys, setJourneys] = React.useState([] as Journey[]);
@@ -14,8 +15,8 @@ const Journeys = () => {
   const [offset, setOffset] = React.useState(0);
   const [ordering, setOrdering] = React.useState('ASC');
 
-  const [endStationName, setEndStationName] = React.useState('');
-  const [startStationName, setStartStationName] = React.useState('');
+  const [stationName, setStationName] = React.useState('');
+  // const [startStationName, setStartStationName] = React.useState('');
   const [from, setFrom] = React.useState(new Date('2021-04-01 00:00'));
   const [to, setTo] = React.useState(new Date('2021-09-01 00:00'));
   const [minDist, setMinDist] = React.useState(0);
@@ -29,26 +30,29 @@ const Journeys = () => {
 
   React.useEffect(() => {
     const getData = setTimeout(() => {
-      getAllJourneys({ limit, offset, orderby, ordering, endStationName, startStationName, from: from.toISOString(), to: to.toISOString(), minDist:minDist*1000, maxDist: maxDist*1000, minDur, maxDur }).then((data) =>
+      getAllJourneys({ limit, offset, orderby, ordering, endStationName: stationName, startStationName: stationName, from: from.toISOString(), to: to.toISOString(), minDist:minDist*1000, maxDist: maxDist*1000, minDur, maxDur }).then((data) =>
         setJourneys(data)
       )}, 500)
 
     return () => clearTimeout(getData)
-  }, [orderby, limit, offset, ordering, endStationName, startStationName, from, to, minDist, maxDist, minDur, maxDur]);
+  }, [orderby, limit, offset, ordering, stationName, from, to, minDist, maxDist, minDur, maxDur]);
 
   return (
     <div>
-      <div className='flex flex-wrap justify-between align-middle'>
-        <TimeFilter fromChange={setFrom} toChange={setTo} from={from} to={to} showDate={true} showTime={false} ></TimeFilter>
+      <div className='flex flex-wrap justify-between items-center'>
+        <TimeFilter fromChange={setFrom} toChange={setTo} from={from} to={to}></TimeFilter>
         <DistFilter minChange={setMinDist} maxChange={setMaxDist} min={minDist} max={maxDist} ></DistFilter>
         <DurFilter minChange={setMinDur} maxChange={setMaxDur} min={minDur} max={maxDur}></DurFilter>
       </div>
-      <Pagination
-        limit={limit}
-        offset={offset}
-        offsetChange={(value: number) => setOffset(value)}
-        limitChange={(value: number) => setLimit(value)}
-      />
+      <div className='flex flex-wrap justify-between items-center'>
+        <Searchbar searchStringChange={setStationName} searchString={stationName} ></Searchbar>
+        <Pagination
+          limit={limit}
+          offset={offset}
+          offsetChange={(value: number) => setOffset(value)}
+          limitChange={(value: number) => setLimit(value)}
+        />
+      </div>
       <ul className="journeys bg-slate-300 font-bold">
         <li className="grid grid-cols-9 p-2 border-b" key={'header'}>
           <p className="text-left"> #. </p>
