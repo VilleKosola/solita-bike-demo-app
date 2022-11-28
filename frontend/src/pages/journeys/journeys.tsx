@@ -7,6 +7,8 @@ import TimeFilter from '../../components/time-filter/time-filter';
 import DistFilter from '../../components/dist-filter/dist-filter';
 import DurFilter from '../../components/dur-filter/dur-filter';
 import Searchbar from '../../components/searchbar/searchbar';
+import { getAllStations } from '../../services/StationService';
+import { Station } from '../../types/station';
 
 const Journeys = () => {
   const [journeys, setJourneys] = React.useState([] as Journey[]);
@@ -24,6 +26,8 @@ const Journeys = () => {
   const [minDur, setMinDur] = React.useState(0);
   const [maxDur, setMaxDur] = React.useState(1000000);
 
+  const [stations, setStations] = React.useState([] as Station[]);
+
   const toggleOrdering = () => {
     setOrdering(ordering === 'ASC' ? 'DESC' : 'ASC');
   };
@@ -37,6 +41,12 @@ const Journeys = () => {
     return () => clearTimeout(getData)
   }, [orderby, limit, offset, ordering, stationName, from, to, minDist, maxDist, minDur, maxDur]);
 
+  React.useEffect( () => { 
+    getAllStations({ limit:500, offset: 0, orderby: 'name', ordering: 'ASC' }).then((data) =>
+      setStations(data)
+    );
+  }, [])
+
   return (
     <div>
       <div className='flex flex-wrap justify-between items-center'>
@@ -45,7 +55,7 @@ const Journeys = () => {
         <DurFilter minChange={setMinDur} maxChange={setMaxDur} min={minDur} max={maxDur}></DurFilter>
       </div>
       <div className='flex flex-wrap justify-between items-center'>
-        <Searchbar searchStringChange={setStationName} searchString={stationName} ></Searchbar>
+        <Searchbar searchStringChange={setStationName} searchString={stationName} stations={stations} ></Searchbar>
         <Pagination
           limit={limit}
           offset={offset}

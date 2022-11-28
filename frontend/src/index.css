@@ -67,7 +67,7 @@ code {
 .pagination-parent {
   min-width: calc(100% - 320px);
 }
-.time-filter-parent {
+.searchbar-parent {
   width: 320px;
   height: 35px;
 }

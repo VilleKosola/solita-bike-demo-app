@@ -5,11 +5,11 @@ import { Station } from '../../types/station';
 interface SearchbarProps {
   searchStringChange: { (value: string): void };
   searchString: string;
+  stations: Station[];
 }
 
 const Searchbar = (props: SearchbarProps) => {
   const [searchString, setsearchString] = React.useState(props.searchString);
-  const [stations, setStations] = React.useState([] as Station[]);
   const [results, setResults] = React.useState([] as JSX.Element[]);
 
   const filterFn = (s: Station) => {
@@ -17,19 +17,13 @@ const Searchbar = (props: SearchbarProps) => {
   }
 
   React.useEffect( () => { 
-        getAllStations({ limit:500, offset: 0, orderby: 'name', ordering: 'ASC' }).then((data) =>
-          setStations(data)
-        );
-  }, [])
-
-  React.useEffect( () => { 
-    setResults(stations.filter(s => filterFn(s)).map(s => (
-      <a key={s.id} onClick={(e) => setsearchString(s.nimi)}>{s.name}</a>
+    setResults(props.stations.filter(s => filterFn(s)).map(s => (
+      <a data-testid="search-item" key={s.id} onClick={(e) => setsearchString(s.nimi)}>{s.name}</a>
     )))
-  }, [searchString])
+  }, [searchString, props.stations])
 
   return (
-    <div data-testid="time-filter-parent" className="flex relative justify-center time-filter-parent pl-3">
+    <div data-testid="searchbar-parent" className="flex relative justify-center searchbar-parent pl-3">
       <div id="myDropdown" className="dropdown-content show">
         <input type="text" value={searchString} placeholder="Search.." id="myInput" onChange={(e) => {setsearchString(e.target.value); props.searchStringChange(e.target.value)}} />
         { results }
