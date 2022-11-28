@@ -1,44 +1,24 @@
-// import { render, screen } from '@testing-library/react';
-// import Pagination from './filtering';
+import { fireEvent, render, screen } from '@testing-library/react';
+import DistFilter from './dist-filter';
 
-// test('test no previous exists button if offset is 0', () => {
-//   render(
-//     <Pagination
-//       offsetChange={() => ''}
-//       limitChange={() => ''}
-//       limit={100}
-//       offset={0}
-//     />
-//   );
-//   const parent = screen.getByTestId('pagination-parent');
-//   expect(parent.querySelector('#offset-previous')).not.toBeInTheDocument();
-// });
+test('test min callback', () => {
+    let val = 0;
+    const change = (value: number) => val = value;
+    render(
+        <DistFilter minChange={change} maxChange={change} min={0} max={1000} />
+    );
+    const input = screen.getByTestId('min-input');
+    fireEvent.change(input, {target: {value: 999}})
+    expect(val).toBe(999);
+});
 
-// test('test previous button exists if offset is > 0', () => {
-//   render(
-//     <Pagination
-//       offsetChange={() => ''}
-//       limitChange={() => ''}
-//       limit={100}
-//       offset={100}
-//     />
-//   );
-//   const parent = screen.getByTestId('pagination-parent');
-//   expect(parent.querySelector('#offset-previous')).toBeInTheDocument();
-// });
-
-// test('test pagination limits', () => {
-//   render(
-//     <Pagination
-//       offsetChange={() => ''}
-//       limitChange={() => ''}
-//       limit={100}
-//       offset={0}
-//     />
-//   );
-//   const limitSelect: HTMLSelectElement = screen.getByTestId('limit-select');
-
-//   expect(limitSelect.options.length).toBe(4);
-// });
-
-export{}
+test('test max callback', () => {
+    let val = 0;
+    const change = (value: number) => val = value;
+    render(
+        <DistFilter minChange={change} maxChange={change} min={0} max={1000} />
+    );
+    const input = screen.getByTestId('max-input');
+    fireEvent.change(input, {target: {value: 999}})
+    expect(val).toBe(999);
+});

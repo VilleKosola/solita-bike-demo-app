@@ -30,32 +30,3 @@ test('test search string renders only one result', async () => {
 
   expect(items.length).toBe(1);
 });
-
-// test('test previous button exists if offset is > 0', () => {
-//   render(
-//     <Pagination
-//       offsetChange={() => ''}
-//       limitChange={() => ''}
-//       limit={100}
-//       offset={100}
-//     />
-//   );
-//   const parent = screen.getByTestId('pagination-parent');
-//   expect(parent.querySelector('#offset-previous')).toBeInTheDocument();
-// });
-
-// test('test pagination limits', () => {
-//   render(
-//     <Pagination
-//       offsetChange={() => ''}
-//       limitChange={() => ''}
-//       limit={100}
-//       offset={0}
-//     />
-//   );
-//   const limitSelect: HTMLSelectElement = screen.getByTestId('limit-select');
-
-//   expect(limitSelect.options.length).toBe(4);
-// });
-
-export{}

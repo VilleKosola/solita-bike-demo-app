@@ -6,7 +6,6 @@ interface TimeFilterProps {
   toChange: { (value: Date): void };
   from: Date;
   to: Date;
-
 }
 
 const TimeFilter = (props: TimeFilterProps) => {
@@ -17,7 +16,7 @@ const TimeFilter = (props: TimeFilterProps) => {
     <div data-testid="time-filter-parent" className="flex justify-center p-3">
       <DatePicker onChange={(value: Date) => {setFrom(value); props.fromChange(value)}} value={from} />
       -
-      <DatePicker onChange={(value: Date) => {setTo(value);props.toChange(value)}} value={to} />
+      <DatePicker onChange={(value: Date) => {setTo(value); props.toChange(value)}} value={to} />
     </div>
   );
 };
