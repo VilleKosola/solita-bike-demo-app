@@ -1,4 +1,5 @@
-import React from 'react';
+import { useStationsDispatch } from '../../contexts/stations-context/StationsContext';
+import { deleteStation } from '../../services/StationService';
 import { Station } from '../../types/station';
 import LeafletMap from '../map/map';
 import StationStats from '../station-stats/station-stats';
@@ -11,10 +12,23 @@ const StationItem = (props: {
 }) => {
   const station = props.station;
 
+  const dispatch = useStationsDispatch();
+
+  const removeStation = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    deleteStation(station.id).then((s) =>
+      dispatch({
+        type: 'delete',
+        id: station.id,
+        stations: s,
+      })
+    );
+  };
+
   return (
     <>
       <li
-        className="grid grid-cols-9 p-2 border-b cursor-pointer hover:bg-gray-200"
+        className="grid grid-cols-10 p-2 border-b cursor-pointer hover:bg-gray-200"
         key={station.fid}
         data-testid="station-item"
         onClick={() => props.setActive(station.id.toString())}
@@ -26,10 +40,18 @@ const StationItem = (props: {
         <p className="text-left">{station.operator}</p>
         <p className="text-left">{station.x_coordinate}</p>
         <p className="text-left">{station.y_coordinate}</p>
+        <p className="flex justify-end items-center">
+          <button
+            onClick={removeStation}
+            className="cursor-pointer border border-solid border-l-gray-400"
+          >
+            Delete
+          </button>
+        </p>
       </li>
       {props.active && (
         <div>
-          <StationStats station={station} ></StationStats>
+          <StationStats station={station}></StationStats>
           <LeafletMap
             locations={[
               {

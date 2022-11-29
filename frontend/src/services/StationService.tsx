@@ -1,17 +1,15 @@
-import { getParams } from "./helperService";
+import { Station } from '../types/station';
+import { getParams } from './helperService';
 
 const getAllStations = async (p: {
   limit: number;
   offset: number;
   orderby: string;
   ordering: string;
-  stationName?: string
+  stationName?: string;
 }) => {
   try {
-    const response = fetch(
-      `http://localhost:3002/stations?` +
-        getParams(p)
-    );
+    const response = fetch(`http://localhost:3002/stations?` + getParams(p));
     return (await response).json();
   } catch (error) {
     return [];
@@ -21,16 +19,40 @@ const getAllStations = async (p: {
 const getStationsById = async (p: string[]) => {
   const body = JSON.stringify(p);
   try {
-    const response = fetch(
-      `http://localhost:3002/stations`,
-      {
-        method: 'POST',
-        body: body,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      }
-    );
+    const response = fetch(`http://localhost:3002/stations`, {
+      method: 'POST',
+      body: body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return (await response).json();
+  } catch (error) {
+    return [];
+  }
+};
+
+const postStation = async (station: Station) => {
+  const body = JSON.stringify(station);
+  try {
+    const response = fetch(`http://localhost:3002/station`, {
+      method: 'POST',
+      body: body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return (await response).json();
+  } catch (error) {
+    return [];
+  }
+};
+
+const deleteStation = async (id: number | string) => {
+  try {
+    const response = fetch(`http://localhost:3002/station/${id}`, {
+      method: 'DELETE',
+    });
     return (await response).json();
   } catch (error) {
     return [];
@@ -40,8 +62,7 @@ const getStationsById = async (p: string[]) => {
 const getStationStatistics = async (id: string, from: string, to: string) => {
   try {
     const response = fetch(
-      `http://localhost:3002/station/stats/${id}?` +
-      getParams({from, to})
+      `http://localhost:3002/station/stats/${id}?` + getParams({ from, to })
     );
     return (await response).json();
   } catch (error) {
@@ -49,4 +70,10 @@ const getStationStatistics = async (id: string, from: string, to: string) => {
   }
 };
 
-export { getAllStations, getStationsById, getStationStatistics };
+export {
+  getAllStations,
+  getStationsById,
+  getStationStatistics,
+  postStation,
+  deleteStation,
+};

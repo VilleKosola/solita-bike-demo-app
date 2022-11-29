@@ -1,41 +1,53 @@
 import React from 'react';
-import { Station } from '../../types/station';
 import Pagination from '../../components/pagination/pagination';
 import { getAllStations } from '../../services/StationService';
 import StationList from '../../components/stations-list/stations-list';
 import Searchbar from '../../components/searchbar/searchbar';
+import {
+  useStations,
+  useStationsDispatch,
+} from '../../contexts/stations-context/StationsContext';
+import AddStation from '../../components/add-station';
 
 const Stations = () => {
-  const [stations, setStations] = React.useState([] as Station[]);
   const [orderby, setOrderBy] = React.useState('nimi');
   const [limit, setLimit] = React.useState(100);
   const [offset, setOffset] = React.useState(0);
   const [ordering, setOrdering] = React.useState('ASC');
   const [stationName, setStationName] = React.useState('');
+  const stations = useStations();
+  const dispatch = useStationsDispatch();
 
   const toggleOrdering = () => {
     setOrdering(ordering === 'ASC' ? 'DESC' : 'ASC');
   };
 
   React.useEffect(() => {
-    getAllStations({ limit, offset, orderby, ordering, stationName }).then((data) =>
-      setStations(data)
+    getAllStations({ limit, offset, orderby, ordering, stationName }).then(
+      (data) => dispatch({ type: 'set', stations: data, id: 111 })
     );
-  }, [orderby, limit, offset, ordering, stationName]);
+  }, [orderby, limit, offset, ordering, stationName, dispatch]);
 
   return (
     <div>
-      <div className='flex flex-wrap justify-between items-center'>
-        <Searchbar searchStringChange={setStationName} searchString={stationName} stations={stations} ></Searchbar>
+      <div className="flex flex-wrap justify-between items-center">
+        <Searchbar
+          searchStringChange={setStationName}
+          searchString={stationName}
+          stations={stations}
+        ></Searchbar>
         <Pagination
           limit={limit}
           offset={offset}
           offsetChange={(value: number) => setOffset(value)}
           limitChange={(value: number) => setLimit(value)}
         />
+        <div className=" absolute top-10 right-6">
+          <AddStation />
+        </div>
       </div>
       <ul className="journeys bg-slate-300 font-bold">
-        <li className="grid grid-cols-9 p-2 border-b" key={'header'}>
+        <li className="grid grid-cols-10 p-2 border-b" key={'header'}>
           <p className="text-left"> #. </p>
           <p
             className="text-left col-span-2 cursor-pointer"
@@ -97,6 +109,7 @@ const Stations = () => {
             {' '}
             Y-coordinate{' '}
           </p>
+          <p className="text-right"> Actions </p>
         </li>
       </ul>
       <StationList stations={stations} offset={offset} />

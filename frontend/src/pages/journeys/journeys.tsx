@@ -7,8 +7,7 @@ import TimeFilter from '../../components/time-filter/time-filter';
 import DistFilter from '../../components/dist-filter/dist-filter';
 import DurFilter from '../../components/dur-filter/dur-filter';
 import Searchbar from '../../components/searchbar/searchbar';
-import { getAllStations } from '../../services/StationService';
-import { Station } from '../../types/station';
+import { useStations } from '../../contexts/stations-context/StationsContext';
 
 const Journeys = () => {
   const [journeys, setJourneys] = React.useState([] as Journey[]);
@@ -26,7 +25,7 @@ const Journeys = () => {
   const [minDur, setMinDur] = React.useState(0);
   const [maxDur, setMaxDur] = React.useState(1000000);
 
-  const [stations, setStations] = React.useState([] as Station[]);
+  const stations = useStations();
 
   const toggleOrdering = () => {
     setOrdering(ordering === 'ASC' ? 'DESC' : 'ASC');
@@ -34,28 +33,61 @@ const Journeys = () => {
 
   React.useEffect(() => {
     const getData = setTimeout(() => {
-      getAllJourneys({ limit, offset, orderby, ordering, endStationName: stationName, startStationName: stationName, from: from.toISOString(), to: to.toISOString(), minDist:minDist*1000, maxDist: maxDist*1000, minDur, maxDur }).then((data) =>
-        setJourneys(data)
-      )}, 500)
+      getAllJourneys({
+        limit,
+        offset,
+        orderby,
+        ordering,
+        endStationName: stationName,
+        startStationName: stationName,
+        from: from.toISOString(),
+        to: to.toISOString(),
+        minDist: minDist * 1000,
+        maxDist: maxDist * 1000,
+        minDur,
+        maxDur,
+      }).then((data) => setJourneys(data));
+    }, 500);
 
-    return () => clearTimeout(getData)
-  }, [orderby, limit, offset, ordering, stationName, from, to, minDist, maxDist, minDur, maxDur]);
-
-  React.useEffect( () => { 
-    getAllStations({ limit:500, offset: 0, orderby: 'name', ordering: 'ASC' }).then((data) =>
-      setStations(data)
-    );
-  }, [])
+    return () => clearTimeout(getData);
+  }, [
+    orderby,
+    limit,
+    offset,
+    ordering,
+    stationName,
+    from,
+    to,
+    minDist,
+    maxDist,
+    minDur,
+    maxDur,
+  ]);
 
   return (
     <div>
-      <div className='flex flex-wrap justify-between items-center'>
-        <TimeFilter fromChange={setFrom} toChange={setTo} from={from} to={to}></TimeFilter>
-        <DistFilter minChange={setMinDist} maxChange={setMaxDist} min={minDist} max={maxDist} ></DistFilter>
-        <DurFilter minChange={setMinDur} maxChange={setMaxDur} min={minDur} max={maxDur}></DurFilter>
+      {/* TODO: add container component */}
+      <div className="flex flex-wrap justify-between items-center">
+        <TimeFilter fromChange={setFrom} toChange={setTo} from={from} to={to} />
+        <DistFilter
+          minChange={setMinDist}
+          maxChange={setMaxDist}
+          min={minDist}
+          max={maxDist}
+        ></DistFilter>
+        <DurFilter
+          minChange={setMinDur}
+          maxChange={setMaxDur}
+          min={minDur}
+          max={maxDur}
+        ></DurFilter>
       </div>
-      <div className='flex flex-wrap justify-between items-center'>
-        <Searchbar searchStringChange={setStationName} searchString={stationName} stations={stations} ></Searchbar>
+      <div className="flex flex-wrap justify-between items-center">
+        <Searchbar
+          searchStringChange={setStationName}
+          searchString={stationName}
+          stations={stations}
+        ></Searchbar>
         <Pagination
           limit={limit}
           offset={offset}
@@ -66,6 +98,7 @@ const Journeys = () => {
       <ul className="journeys bg-slate-300 font-bold">
         <li className="grid grid-cols-9 p-2 border-b" key={'header'}>
           <p className="text-left"> #. </p>
+          {/* TODO: move to component, try classnames library */}
           <p
             className="text-left col-span-2 cursor-pointer"
             onClick={() => {
