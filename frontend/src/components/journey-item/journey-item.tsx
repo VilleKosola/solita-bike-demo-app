@@ -43,7 +43,10 @@ const JourneyItem = (props: {
       </li>
       {props.active && (
         <MapWrapper
-          stationIds={[journey.departure_station.toString(), journey.return_station.toString()]}
+          stationIds={[
+            journey.departure_station.toString(),
+            journey.return_station.toString(),
+          ]}
         />
       )}
     </>

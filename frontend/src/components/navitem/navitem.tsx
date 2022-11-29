@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
-interface navitemprops {
+interface NavItemProps {
   name: string;
   path: string;
   active: boolean;
 }
 
-const NavItem = (props: navitemprops) => {
+const NavItem = (props: NavItemProps) => {
   return (
     <Link
       to={props.path}

@@ -8,28 +8,60 @@ interface SearchbarProps {
 }
 
 const Searchbar = (props: SearchbarProps) => {
-  const [searchString, setsearchString] = React.useState(props.searchString);
+  const [searchString, setSearchString] = React.useState(props.searchString);
   const [results, setResults] = React.useState([] as JSX.Element[]);
 
-  React.useEffect( () => { 
+  React.useEffect(() => {
     const filterFn = (s: Station) => {
-      return searchString !== '' && [s.name, s.nimi, s.namn].some(n => n.includes(searchString) && n.toLowerCase() !== searchString.toLowerCase());
-    }
+      return (
+        searchString !== '' &&
+        [s.name, s.nimi, s.namn].some(
+          (n) =>
+            n?.includes(searchString) &&
+            n?.toLowerCase() !== searchString.toLowerCase()
+        )
+      );
+    };
 
+    //TODO: Move elements to return function
     const getData = setTimeout(() => {
-      setResults(props.stations.filter(s => filterFn(s)).map(s => (
-        <span data-testid="search-item" key={s.id} onClick={(e) => {setsearchString(s.nimi); props.searchStringChange(s.nimi)}}>{s.name}</span>
-      )))
-    }, 500)
-    return () => clearTimeout(getData)
-
-  }, [searchString, props])
+      setResults(
+        props.stations
+          .filter((s) => filterFn(s))
+          .map((s) => (
+            <span
+              data-testid="search-item"
+              key={s.id}
+              onClick={(e) => {
+                setSearchString(s.nimi);
+                props.searchStringChange(s.nimi);
+              }}
+            >
+              {s.name}
+            </span>
+          ))
+      );
+    }, 500);
+    return () => clearTimeout(getData);
+  }, [searchString, props]);
 
   return (
-    <div data-testid="searchbar-parent" className="flex relative justify-center searchbar-parent pl-3">
+    <div
+      data-testid="searchbar-parent"
+      className="flex relative justify-center searchbar-parent pl-3"
+    >
       <div id="myDropdown" className="dropdown-content show">
-        <input type="text" value={searchString} placeholder="Search.." id="myInput" onChange={(e) => {setsearchString(e.target.value); props.searchStringChange(e.target.value)}} />
-        { results }
+        <input
+          type="text"
+          value={searchString}
+          placeholder="Search.."
+          id="myInput"
+          onChange={(e) => {
+            setSearchString(e.target.value);
+            props.searchStringChange(e.target.value);
+          }}
+        />
+        {results}
       </div>
     </div>
   );

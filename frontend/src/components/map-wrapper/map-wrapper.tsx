@@ -1,21 +1,22 @@
 import React from 'react';
 import { Station } from '../../types/station';
 import LeafletMap from '../map/map';
-import { getStationsById } from '../../services/StationService'; 
+import { getStationsById } from '../../services/StationService';
 
 interface Location {
-  x: number,
-  y: number,
-  name: string,
-  id: number
+  x: number;
+  y: number;
+  name: string;
+  id: number;
 }
 
+//TODO: change path from map/map to map/index
 function MapWrapper(props: { stationIds: string[] }) {
   const [stations, setStations] = React.useState([] as Location[]);
 
   React.useEffect(() => {
-    if (props.stationIds?.length) {  
-      getStationsById(props.stationIds).then((data: Station []) => {
+    if (props.stationIds?.length) {
+      getStationsById(props.stationIds).then((data: Station[]) => {
         const s = data.map((st) => {
           return {
             x: st.x_coordinate,
@@ -29,9 +30,7 @@ function MapWrapper(props: { stationIds: string[] }) {
     }
   }, [props.stationIds]);
 
-  return (
-    <LeafletMap locations={stations} />
-  );
+  return <LeafletMap locations={stations} />;
 }
 
 export default MapWrapper;

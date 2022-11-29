@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker from 'react-date-picker'
+import DatePicker from 'react-date-picker';
 
 interface TimeFilterProps {
   fromChange: { (value: Date): void };
@@ -14,9 +14,21 @@ const TimeFilter = (props: TimeFilterProps) => {
 
   return (
     <div data-testid="time-filter-parent" className="flex justify-center p-3">
-      <DatePicker onChange={(value: Date) => {setFrom(value); props.fromChange(value)}} value={from} />
+      <DatePicker
+        onChange={(value: Date) => {
+          setFrom(value);
+          props.fromChange(value);
+        }}
+        value={from}
+      />
       -
-      <DatePicker onChange={(value: Date) => {setTo(value); props.toChange(value)}} value={to} />
+      <DatePicker
+        onChange={(value: Date) => {
+          setTo(value);
+          props.toChange(value);
+        }}
+        value={to}
+      />
     </div>
   );
 };

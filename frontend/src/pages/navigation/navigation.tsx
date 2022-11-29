@@ -8,15 +8,24 @@ const Navigation = () => {
   return (
     <>
       <nav>
-        <ul className="flex justify-center p-3 cursor-pointer">
-          <li onClick={() => setPath('/journeys')}>
+        <ul role="tablist" className="flex justify-center p-3">
+          {/* TODO: Add aria-role */}
+          <li
+            role="tab"
+            className="cursor-pointer"
+            onClick={() => setPath('/journeys')}
+          >
             <NavItem
               name={'Journeys'}
               path={'/journeys'}
               active={path === '/journeys'}
             />
           </li>
-          <li onClick={() => setPath('/stations')}>
+          <li
+            role="tab"
+            className="cursor-pointer"
+            onClick={() => setPath('/stations')}
+          >
             <NavItem
               name={'Stations'}
               path={'/stations'}

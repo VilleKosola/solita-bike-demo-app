@@ -80,8 +80,6 @@ const stations: Station[] = [
   },
 ];
 
-
-
 describe('test station listing', () => {
   beforeEach(() => {
     render(<StationList stations={stations} offset={0} />);
@@ -90,21 +88,29 @@ describe('test station listing', () => {
     expect(screen.getAllByTestId('station-item').length).toBe(5);
   });
   test('test 1. item name', () => {
-    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent('Aalto-yliopisto (M), Korkea');
-  })
+    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent(
+      'Aalto-yliopisto (M), Korkea'
+    );
+  });
   test('test 1. item order number', () => {
     expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent('1.');
-  })
+  });
   test('test 1. item address', () => {
-    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent('Otaniementie 10');
-  })
+    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent(
+      'Otaniementie 10'
+    );
+  });
   test('test 1. item city', () => {
     expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent('Espoo');
-  })
+  });
   test('test 1. item x-coordinate', () => {
-    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent('60.18431');
-  })
+    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent(
+      '60.18431'
+    );
+  });
   test('test 1. item y-coordinate', () => {
-    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent('24.826672');
-  })
+    expect(screen.getAllByTestId('station-item')[0]).toHaveTextContent(
+      '24.826672'
+    );
+  });
 });

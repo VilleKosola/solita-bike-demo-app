@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { StationsProvider } from './contexts/stations-context/StationsContext';
 // import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -13,7 +14,9 @@ root.render(
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"
     />
-    <App />
+    <StationsProvider>
+      <App />
+    </StationsProvider>
   </React.StrictMode>
 );
 

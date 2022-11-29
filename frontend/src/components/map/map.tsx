@@ -9,11 +9,13 @@ interface Location {
 }
 
 const LeafletMap = (props: { locations: Location[] }) => {
-  const [locations, setLocations] = React.useState([props.locations[0] ?? {x: 24.95, y: 60.21, name: 'placeholder', id: 123}] as Location[]);
-  
+  const [locations, setLocations] = React.useState([
+    props.locations[0] ?? { x: 24.95, y: 60.21, name: 'placeholder', id: 123 },
+  ] as Location[]);
+
   React.useEffect(() => {
     if (props.locations?.length) {
-      setLocations(props.locations)
+      setLocations(props.locations);
     }
   }, [props.locations]);
 
