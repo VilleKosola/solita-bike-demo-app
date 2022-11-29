@@ -1,7 +1,7 @@
 # solita-bike-demo-app
 
 ## Prerequisites
-    - node.js
+    - node.js 18
 
 ## Configurations
     - Download data csvs from:
@@ -12,6 +12,17 @@
     - Place files to data folder in repo root
 
 ## Running
-    - Start and init the database by running `docker-compose up --build` in repo root.
+    - Start the database by running `docker-compose up` in repo root.
     - Start backend by running `npm i` and `npm start` in backend folder
+      - > on first start app will validate the data and put it to the database. That will take 1+ minutes depending on your hardware.
     - Start frontend by running `npm i` and `npm start` in frontend folder
+
+## Tests
+    - run tests by running 'npm test' in frontend or backend folder
+
+TODO:
+https://github.com/nvm-sh/nvm
+
+tietokantamigraatiotyökalu: esim. flyway
+
+git hook formatoinnille ja lintille: Husky js / pre-push
