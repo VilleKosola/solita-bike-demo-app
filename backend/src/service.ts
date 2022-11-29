@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { queryJourneyCount, queryJourneys, queryStationAvgDistanceFrom, queryStationAvgDistanceTo, queryStationEndingCount, queryStationEndingToTop, queryStations, queryStationsByIds, queryStationStartingCount, queryStationStartingFromTop } from "./queries";
-import { StationStatistics } from "./types/Station";
+import { insertStation, queryJourneyCount, queryJourneys, queryStationAvgDistanceFrom, queryStationAvgDistanceTo, queryStationEndingCount, queryStationEndingToTop, queryStations, queryStationsByIds, queryStationStartingCount, queryStationStartingFromTop, removeStation } from "./queries";
+import { Station, StationStatistics } from "./types/Station";
+import crypto from 'crypto';
 
   export async function getStations(request: Request, response: Response){
     const limit = (request.query.limit || '100') as string;
@@ -25,6 +26,7 @@ import { StationStatistics } from "./types/Station";
     const id = request.params.id as string;
     try {
       let station: StationStatistics = {id: id};
+      //change to camelcase
       station.starting_count = await queryStationStartingCount(id, from, to).then(res => res.rows[0].count);
       station.ending_count = await queryStationEndingCount(id, from, to).then(res => res.rows[0].count);
       station.avg_dist_from = await queryStationAvgDistanceFrom(id, from, to).then(res => res.rows[0].avg);
@@ -64,3 +66,15 @@ import { StationStatistics } from "./types/Station";
     .then((res) => response.status(200).json(res?.rows))
     .catch((err) => response.status(500).json(err.message))     
   }
+
+  export async function createStation(request: Request, response: Response) {
+    return await insertStation({...request.body, id: crypto.randomInt(9999999).toString()} as Station)
+    .then((res) => response.status(200).json(res?.rows))
+    .catch((err) => response.status(500).json(err.message))   
+  }
+  export async function deleteStation(request: Request, response: Response) {
+    return await removeStation(request.params.id)
+    .then((res) => response.status(200).json([]))
+    .catch((err) => response.status(500).json(err.message))   
+  }
+

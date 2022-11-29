@@ -31,6 +31,8 @@ app.use(express.json());
 app.get('/stations', service.getStations)
 app.get('/station/stats/:id', service.getStationStatistics)
 app.post('/stations', service.getStationsByIds)
+app.post('/station', service.createStation)
+app.delete('/station/:id', service.deleteStation)
 
 app.get('/journey', service.getJourneys)
 app.get('/journey-count', service.getJourneyCount)
