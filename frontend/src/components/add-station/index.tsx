@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useStationsDispatch } from '../../contexts/stations-context/StationsContext';
+import { useStationsDispatch } from '../../contexts/stations-context';
 import { postStation } from '../../services/StationService';
 import { Station } from '../../types/station';
 

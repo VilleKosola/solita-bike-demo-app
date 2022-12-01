@@ -1,4 +1,4 @@
-import { useStationsDispatch } from '../../contexts/stations-context/StationsContext';
+import { useStationsDispatch } from '../../contexts/stations-context';
 import { deleteStation } from '../../services/StationService';
 import { Station } from '../../types/station';
 import LeafletMap from '../map';

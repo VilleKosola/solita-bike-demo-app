@@ -10,7 +10,6 @@ interface Location {
   id: number;
 }
 
-//TODO: change path from map/map to map/index
 function MapWrapper(props: { stationIds: string[] }) {
   const [stations, setStations] = React.useState([] as Location[]);
 

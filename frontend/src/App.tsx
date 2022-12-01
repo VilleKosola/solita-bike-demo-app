@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import Navigation from './pages/navigation';
 import Stations from './pages/stations';
-import { useStationsDispatch } from './contexts/stations-context/StationsContext';
+import { useStationsDispatch } from './contexts/stations-context';
 import React from 'react';
 import { getAllStations } from './services/StationService';
 import { Station } from './types/station';

@@ -6,7 +6,7 @@ import Searchbar from '../../components/searchbar';
 import {
   useStations,
   useStationsDispatch,
-} from '../../contexts/stations-context/StationsContext';
+} from '../../contexts/stations-context';
 import AddStation from '../../components/add-station';
 
 const Stations = () => {
