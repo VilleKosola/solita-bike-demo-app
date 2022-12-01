@@ -124,7 +124,7 @@ const Journeys = () => {
             ordering={ordering}
             active={orderby === 'return_station_name'}
             className={['text-left', 'col-span-2', 'cursor-pointer']}
-          />    
+          />
           <TableHeader
             clickFn={() => {
               setOrderBy('departuredate');
@@ -134,7 +134,7 @@ const Journeys = () => {
             ordering={ordering}
             active={orderby === 'departuredate'}
             className={['text-left', 'cursor-pointer']}
-          />  
+          />
           <TableHeader
             clickFn={() => {
               setOrderBy('returndate');
