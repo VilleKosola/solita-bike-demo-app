@@ -7,14 +7,16 @@ import TimeFilter from '../../components/time-filter';
 import DistFilter from '../../components/dist-filter';
 import DurFilter from '../../components/dur-filter';
 import Searchbar from '../../components/searchbar';
-import { useStations } from '../../contexts/stations-context/StationsContext';
+import { useStations } from '../../contexts/stations-context';
+import FilterContainer from '../../components/filter-container';
+import TableHeader from '../../components/table-header';
 
 const Journeys = () => {
   const [journeys, setJourneys] = React.useState([] as Journey[]);
   const [orderby, setOrderBy] = React.useState('');
   const [limit, setLimit] = React.useState(100);
   const [offset, setOffset] = React.useState(0);
-  const [ordering, setOrdering] = React.useState('ASC');
+  const [ordering, setOrdering] = React.useState('ASC' as 'ASC' | 'DESC');
 
   const [stationName, setStationName] = React.useState('');
   // const [startStationName, setStartStationName] = React.useState('');
@@ -66,8 +68,7 @@ const Journeys = () => {
 
   return (
     <div>
-      {/* TODO: add container component */}
-      <div className="flex flex-wrap justify-between items-center">
+      <FilterContainer>
         <TimeFilter fromChange={setFrom} toChange={setTo} from={from} to={to} />
         <DistFilter
           minChange={setMinDist}
@@ -81,8 +82,8 @@ const Journeys = () => {
           min={minDur}
           max={maxDur}
         ></DurFilter>
-      </div>
-      <div className="flex flex-wrap justify-between items-center">
+      </FilterContainer>
+      <FilterContainer>
         <Searchbar
           searchStringChange={setStationName}
           searchString={stationName}
@@ -94,12 +95,29 @@ const Journeys = () => {
           offsetChange={(value: number) => setOffset(value)}
           limitChange={(value: number) => setLimit(value)}
         />
-      </div>
+      </FilterContainer>
       <ul className="journeys bg-slate-300 font-bold">
         <li className="grid grid-cols-9 p-2 border-b" key={'header'}>
-          <p className="text-left"> #. </p>
+          <TableHeader
+            clickFn={() => ''}
+            label={'#.'}
+            ordering={ordering}
+            active={false}
+            className={['text-left']}
+          />
+          {/* <p className="text-left"> #. </p> */}
           {/* TODO: move to component, try classnames library */}
-          <p
+          <TableHeader
+            clickFn={() => {
+              setOrderBy('departure_station_name');
+              toggleOrdering();
+            }}
+            label={'Start station'}
+            ordering={ordering}
+            active={orderby === 'departure_station_name'}
+            className={['text-left', 'col-span-2', 'cursor-pointer']}
+          />
+          {/* <p
             className="text-left col-span-2 cursor-pointer"
             onClick={() => {
               setOrderBy('departure_station_name');
@@ -108,7 +126,7 @@ const Journeys = () => {
           >
             {' '}
             Start station{' '}
-          </p>
+          </p> */}
           <p
             className="text-left col-span-2 cursor-pointer"
             onClick={() => {
