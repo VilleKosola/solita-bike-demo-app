@@ -9,7 +9,7 @@ interface SearchbarProps {
 
 const Searchbar = (props: SearchbarProps) => {
   const [searchString, setSearchString] = React.useState(props.searchString);
-  const [results, setResults] = React.useState([] as JSX.Element[]);
+  const [results, setResults] = React.useState([] as Station[]);
 
   React.useEffect(() => {
     const filterFn = (s: Station) => {
@@ -23,24 +23,8 @@ const Searchbar = (props: SearchbarProps) => {
       );
     };
 
-    //TODO: Move elements to return function
     const getData = setTimeout(() => {
-      setResults(
-        props.stations
-          .filter((s) => filterFn(s))
-          .map((s) => (
-            <span
-              data-testid="search-item"
-              key={s.id}
-              onClick={(e) => {
-                setSearchString(s.nimi);
-                props.searchStringChange(s.nimi);
-              }}
-            >
-              {s.name}
-            </span>
-          ))
-      );
+      setResults(props.stations.filter((s) => filterFn(s)));
     }, 500);
     return () => clearTimeout(getData);
   }, [searchString, props]);
@@ -61,7 +45,18 @@ const Searchbar = (props: SearchbarProps) => {
             props.searchStringChange(e.target.value);
           }}
         />
-        {results}
+        {results.map((s) => (
+          <span
+            data-testid="search-item"
+            key={s.id}
+            onClick={(e) => {
+              setSearchString(s.nimi);
+              props.searchStringChange(s.nimi);
+            }}
+          >
+            {s.name}
+          </span>
+        ))}
       </div>
     </div>
   );
