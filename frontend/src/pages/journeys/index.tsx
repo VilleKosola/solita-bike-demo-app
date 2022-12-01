@@ -105,8 +105,6 @@ const Journeys = () => {
             active={false}
             className={['text-left']}
           />
-          {/* <p className="text-left"> #. </p> */}
-          {/* TODO: move to component, try classnames library */}
           <TableHeader
             clickFn={() => {
               setOrderBy('departure_station_name');
@@ -117,64 +115,56 @@ const Journeys = () => {
             active={orderby === 'departure_station_name'}
             className={['text-left', 'col-span-2', 'cursor-pointer']}
           />
-          {/* <p
-            className="text-left col-span-2 cursor-pointer"
-            onClick={() => {
-              setOrderBy('departure_station_name');
-              toggleOrdering();
-            }}
-          >
-            {' '}
-            Start station{' '}
-          </p> */}
-          <p
-            className="text-left col-span-2 cursor-pointer"
-            onClick={() => {
+          <TableHeader
+            clickFn={() => {
               setOrderBy('return_station_name');
               toggleOrdering();
             }}
-          >
-            {' '}
-            End station{' '}
-          </p>
-          <p
-            className="text-left cursor-pointer"
-            onClick={() => {
+            label={'End station'}
+            ordering={ordering}
+            active={orderby === 'return_station_name'}
+            className={['text-left', 'col-span-2', 'cursor-pointer']}
+          />    
+          <TableHeader
+            clickFn={() => {
               setOrderBy('departuredate');
               toggleOrdering();
             }}
-          >
-            {' '}
-            Start date{' '}
-          </p>
-          <p
-            className="text-left cursor-pointer"
-            onClick={() => {
+            label={'Start date'}
+            ordering={ordering}
+            active={orderby === 'departuredate'}
+            className={['text-left', 'cursor-pointer']}
+          />  
+          <TableHeader
+            clickFn={() => {
               setOrderBy('returndate');
               toggleOrdering();
             }}
-          >
-            {' '}
-            End date{' '}
-          </p>
-          <p
-            className="text-left cursor-pointer"
-            onClick={() => {
+            label={'End date'}
+            ordering={ordering}
+            active={orderby === 'returndate'}
+            className={['text-left', 'cursor-pointer']}
+          />
+          <TableHeader
+            clickFn={() => {
               setOrderBy('distance');
               toggleOrdering();
             }}
-          >
-            Distance
-          </p>
-          <p
-            className="text-left cursor-pointer"
-            onClick={() => {
+            label={'Distance'}
+            ordering={ordering}
+            active={orderby === 'distance'}
+            className={['text-left', 'cursor-pointer']}
+          />
+          <TableHeader
+            clickFn={() => {
               setOrderBy('duration');
               toggleOrdering();
             }}
-          >
-            Duration
-          </p>
+            label={'Duration'}
+            ordering={ordering}
+            active={orderby === 'duration'}
+            className={['text-left', 'cursor-pointer']}
+          />
         </li>
       </ul>
       <JourneysList journeys={journeys} offset={offset} />

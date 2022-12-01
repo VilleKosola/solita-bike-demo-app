@@ -77,3 +77,18 @@ code {
 .react-date-picker__calendar {
   z-index: 2 !important;
 }
+
+.ordering {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+.DESC {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+.ASC {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
