@@ -13,6 +13,7 @@ import { useStationsDispatch } from './contexts/stations-context/StationsContext
 import React from 'react';
 import { getAllStations } from './services/StationService';
 import { Station } from './types/station';
+import AppHeader from './components/header';
 
 function App() {
   const dispatch = useStationsDispatch();
@@ -34,10 +35,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* TODO: move to component */}
-      <header className="App-header h-10 flex justify-center">
-        Helsinki city bike journeys app
-      </header>
+      <AppHeader headerTitle={'Helsinki city bike journeys app'} />
       <Routes>
         <Route path="*" element={<Navigation />}>
           <Route path="journeys" element={<Journeys />} />
