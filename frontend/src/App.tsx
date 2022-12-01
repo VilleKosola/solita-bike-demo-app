@@ -1,5 +1,5 @@
 import './App.css';
-import Journeys from './pages/journeys/journeys';
+import Journeys from './pages/journeys';
 import {
   BrowserRouter,
   Routes,
@@ -7,8 +7,8 @@ import {
   redirect,
   Navigate,
 } from 'react-router-dom';
-import Navigation from './pages/navigation/navigation';
-import Stations from './pages/stations/stations';
+import Navigation from './pages/navigation';
+import Stations from './pages/stations';
 import { useStationsDispatch } from './contexts/stations-context/StationsContext';
 import React from 'react';
 import { getAllStations } from './services/StationService';

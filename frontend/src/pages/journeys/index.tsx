@@ -1,12 +1,12 @@
 import React from 'react';
 import { Journey } from '../../types/journey';
-import Pagination from '../../components/pagination/pagination';
+import Pagination from '../../components/pagination';
 import { getAllJourneys } from '../../services/JourneysService';
-import JourneysList from '../../components/journeys-list/journeys-list';
-import TimeFilter from '../../components/time-filter/time-filter';
-import DistFilter from '../../components/dist-filter/dist-filter';
-import DurFilter from '../../components/dur-filter/dur-filter';
-import Searchbar from '../../components/searchbar/searchbar';
+import JourneysList from '../../components/journeys-list';
+import TimeFilter from '../../components/time-filter';
+import DistFilter from '../../components/dist-filter';
+import DurFilter from '../../components/dur-filter';
+import Searchbar from '../../components/searchbar';
 import { useStations } from '../../contexts/stations-context/StationsContext';
 
 const Journeys = () => {

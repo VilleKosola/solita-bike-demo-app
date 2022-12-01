@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import StationList from './stations-list';
+import StationList from '.';
 import { Station } from '../../types/station';
 
 const stations: Station[] = [

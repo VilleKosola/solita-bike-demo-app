@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Journey } from '../../types/journey';
-import MapWrapper from '../map-wrapper/map-wrapper';
+import MapWrapper from '../map-wrapper';
 
 const JourneyItem = (props: {
   journey: Journey;

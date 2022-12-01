@@ -1,8 +1,8 @@
 import React from 'react';
-import Pagination from '../../components/pagination/pagination';
+import Pagination from '../../components/pagination';
 import { getAllStations } from '../../services/StationService';
-import StationList from '../../components/stations-list/stations-list';
-import Searchbar from '../../components/searchbar/searchbar';
+import StationList from '../../components/stations-list';
+import Searchbar from '../../components/searchbar';
 import {
   useStations,
   useStationsDispatch,

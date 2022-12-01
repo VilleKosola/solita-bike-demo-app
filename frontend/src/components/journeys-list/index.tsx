@@ -1,5 +1,5 @@
 import { Journey } from '../../types/journey';
-import JourneyItem from '../journey-item/journey-item';
+import JourneyItem from '../journey-item';
 import React from 'react';
 
 const JourneysList = (props: { journeys: Journey[]; offset: number }) => {

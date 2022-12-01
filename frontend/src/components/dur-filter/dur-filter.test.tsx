@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import DurFilter from './dur-filter';
+import DurFilter from '.';
 
 test('test min duration minutes callback', () => {
   let val = 0;

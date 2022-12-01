@@ -1,6 +1,6 @@
 import React from 'react';
 import { Station } from '../../types/station';
-import LeafletMap from '../map/map';
+import LeafletMap from '../map';
 import { getStationsById } from '../../services/StationService';
 
 interface Location {

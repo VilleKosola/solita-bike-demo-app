@@ -1,8 +1,8 @@
 import { useStationsDispatch } from '../../contexts/stations-context/StationsContext';
 import { deleteStation } from '../../services/StationService';
 import { Station } from '../../types/station';
-import LeafletMap from '../map/map';
-import StationStats from '../station-stats/station-stats';
+import LeafletMap from '../map';
+import StationStats from '../station-stats';
 
 const StationItem = (props: {
   station: Station;

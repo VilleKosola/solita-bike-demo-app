@@ -1,6 +1,6 @@
 import React from 'react';
 import { Station } from '../../types/station';
-import StationItem from '../station-item/station-item';
+import StationItem from '../station-item';
 
 const StationList = (props: { stations: Station[]; offset: number }) => {
   const [active, setActive] = React.useState('');

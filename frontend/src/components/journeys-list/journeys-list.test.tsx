@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import JourneysList from './journeys-list';
+import JourneysList from '.';
 import { Journey } from '../../types/journey';
 
 const journeys: Journey[] = [

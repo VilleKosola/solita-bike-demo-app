@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import DistFilter from './dist-filter';
+import DistFilter from '.';
 
 test('test min callback', () => {
   let val = 0;

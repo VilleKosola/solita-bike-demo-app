@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import NavItem from '../../components/navitem/navitem';
+import NavItem from '../../components/navitem';
 
 const Navigation = () => {
   const [path, setPath] = React.useState(window.location.pathname);

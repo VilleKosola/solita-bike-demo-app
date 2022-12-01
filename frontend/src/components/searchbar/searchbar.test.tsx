@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Station } from '../../types/station';
-import Searchbar from './searchbar';
+import Searchbar from '.';
 
 const stations: Station[] = [
   {
