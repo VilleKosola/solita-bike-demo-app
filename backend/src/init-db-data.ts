@@ -133,7 +133,7 @@ const copyCsvToPG = async (csv: string) => {
     COPY journey(departuredate, returndate, departure_station, departure_station_name, return_station, return_station_name, distance, duration) 
     FROM STDIN 
     DELIMITER ',' 
-    CSV HEADER`, 
+    CSV HEADER;`, 
     csv);
 }
 
@@ -142,7 +142,7 @@ const createTables = async () => {
     await db.query("DROP TABLE IF EXISTS station;")
 
     await db.query(`CREATE TABLE station (
-        id INT PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         fid INT,
         nimi VARCHAR(100),
         name VARCHAR(100),
@@ -209,9 +209,12 @@ const initData = async () => {
         console.timeLog('Data parsing', 'stations parsed')
         // add stations to db
         await insertDataToTable(stations, 
-            `INSERT INTO station(fid, id, nimi, namn, name, osoite, address, city, stad, operator, capasity, x_coordinate, y_coordinate) 
+            `BEGIN;
+            INSERT INTO station(fid, id, nimi, namn, name, osoite, address, city, stad, operator, capasity, x_coordinate, y_coordinate) 
             VALUES %L
-            RETURNING *`
+            RETURNING *;
+            SELECT pg_catalog.setval(pg_get_serial_sequence('station', 'id'), MAX(id)) FROM station;
+            END;`
         )
     
         //parse journeys
