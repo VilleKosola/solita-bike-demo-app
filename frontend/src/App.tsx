@@ -14,6 +14,7 @@ import React from 'react';
 import { getAllStations } from './services/StationService';
 import { Station } from './types/station';
 import AppHeader from './components/header';
+import AddNew from './pages/addNew';
 
 function App() {
   const dispatch = useStationsDispatch();
@@ -40,6 +41,7 @@ function App() {
         <Route path="*" element={<Navigation />}>
           <Route path="journeys" element={<Journeys />} />
           <Route path="stations" element={<Stations />} />
+          <Route path="addnew" element={<AddNew />} />
           <Route path="*" element={<Navigate replace to="/journeys" />} />
         </Route>
       </Routes>

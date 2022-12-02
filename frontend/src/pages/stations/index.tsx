@@ -7,7 +7,6 @@ import {
   useStations,
   useStationsDispatch,
 } from '../../contexts/stations-context';
-import AddStation from '../../components/add-station';
 
 const Stations = () => {
   const [orderby, setOrderBy] = React.useState('nimi');
@@ -42,9 +41,6 @@ const Stations = () => {
           offsetChange={(value: number) => setOffset(value)}
           limitChange={(value: number) => setLimit(value)}
         />
-        <div className=" absolute top-10 right-6">
-          <AddStation />
-        </div>
       </div>
       <ul className="journeys bg-slate-300 font-bold">
         <li className="grid grid-cols-10 p-2 border-b" key={'header'}>

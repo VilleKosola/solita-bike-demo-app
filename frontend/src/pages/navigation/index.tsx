@@ -32,6 +32,17 @@ const Navigation = () => {
               active={path === '/stations'}
             />
           </li>
+          <li
+            role="tab"
+            className="cursor-pointer"
+            onClick={() => setPath('/addnew')}
+          >
+            <NavItem
+              name={'Add new'}
+              path={'/addnew'}
+              active={path === '/addnew'}
+            />
+          </li>
         </ul>
       </nav>
 
