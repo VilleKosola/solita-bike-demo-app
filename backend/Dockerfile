@@ -4,7 +4,7 @@ ENV NODE_ENV=production
 
 WORKDIR /usr/src/app
 
-COPY ["package.json", "package-lock.json*", "tsconfig.json", "./"]
+COPY [".env", "package.json", "package-lock.json*", "tsconfig.json", "./"]
 
 RUN npm ci
 

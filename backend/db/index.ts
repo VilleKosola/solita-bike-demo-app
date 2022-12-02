@@ -1,14 +1,22 @@
 import { Pool } from 'pg';
 import {from as copyFrom} from 'pg-copy-streams'
 import { Readable } from 'stream';
+import dotenv from 'dotenv';
 
-  const client: Pool = new Pool({
-    user: 'bikeapp',
-    host: 'db',
-    database: 'bikeapp',
-    password: 'bikeapp',
-    port: 5432,
-  })
+  dotenv.config();
+
+  const vars = process.env
+  const production = vars['NODE_ENV'] === 'production'
+
+  const poolOptions = {
+    user: vars['DB_USER'] || 'bikeapp',
+    host: !production ? vars['DB_HOST'] : 'db',
+    database: vars['DB_NAME'] || 'bikeapp',
+    password: vars['DB_PASSWORD'] || 'bikeapp',
+    port: Number(vars['DB_PORT']) || 5432,
+  }
+
+  const client: Pool = new Pool(poolOptions);
 
 
   export const query = (text: string, params?: any[]) => {
