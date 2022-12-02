@@ -1,5 +1,5 @@
 import csv from 'csv-parser';
-import { createReadStream, writeFileSync } from 'fs';
+import { createReadStream, existsSync } from 'fs';
 import fs from 'fs/promises';
 import { finished } from 'stream/promises';
 import path from 'path';
@@ -9,7 +9,7 @@ import _ from 'lodash'
 import * as db from '../db/index'
 import format from 'pg-format'
 
-const dataDir = '../../../data';
+const dataDir = '../../data';
 let stations: Station[] = [];
 
 const getDirFiles = async () => {
@@ -64,6 +64,14 @@ const validJourneyData = (journey: Journey) => {
 const parseStationsFile = async (fileName: string) => {
     const records: any[] = [];
     const rejectedRecords: any[] = [];
+
+    //file exists check
+    if (!existsSync(path.join(__dirname, dataDir, fileName))) {
+        console.warn('stations file not found!')
+        return {records, rejectedRecords};
+    }
+
+    //separate file read
     const parser = createReadStream(path.join(__dirname, dataDir, fileName))
             .pipe(csv(['fid', 'id', 'nimi', 'namn', 'name', 'osoite', 'address', 'city', 'stad', 'operator', 'capasity', 'x_coordinate', 'y_coordinate'] ))
     parser.on('readable', async function(){
@@ -83,6 +91,13 @@ const parseStationsFile = async (fileName: string) => {
 const parseJourneysCsv = async (fileName: string) => {
     let records: any[] = [];
     const rejectedRecords: any[] = [];
+
+    //file exists check
+    if (!existsSync(path.join(__dirname, dataDir, fileName))) {
+        console.warn('stations file not found!')
+        return {records, rejectedRecords};
+    }
+
     const parser = createReadStream(path.join(__dirname, dataDir, fileName))
             .pipe(csv(['departuredate', 'returndate', 'departure_station', 'departure_station_name', 'return_station', 'return_station_name', 'distance', 'duration']))
     parser.on('readable', async function(){
