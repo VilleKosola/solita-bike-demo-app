@@ -1,6 +1,8 @@
 import { Station } from '../types/station';
 import { getParams } from './helperService';
 
+const baseUrl = 'http://localhost:3002';
+
 const getAllStations = async (p: {
   limit: number;
   offset: number;
@@ -9,7 +11,7 @@ const getAllStations = async (p: {
   stationName?: string;
 }) => {
   try {
-    const response = fetch(`http://localhost:3002/stations?` + getParams(p));
+    const response = fetch(`${baseUrl}/stations?` + getParams(p));
     return (await response).json();
   } catch (error) {
     return [];
@@ -19,7 +21,7 @@ const getAllStations = async (p: {
 const getStationsById = async (p: string[]) => {
   const body = JSON.stringify(p);
   try {
-    const response = fetch(`http://localhost:3002/stations`, {
+    const response = fetch(`${baseUrl}/stations`, {
       method: 'POST',
       body: body,
       headers: {
@@ -35,7 +37,7 @@ const getStationsById = async (p: string[]) => {
 const postStation = async (station: Station) => {
   const body = JSON.stringify(station);
   try {
-    const response = fetch(`http://localhost:3002/station`, {
+    const response = fetch(`${baseUrl}/station`, {
       method: 'POST',
       body: body,
       headers: {
@@ -50,7 +52,7 @@ const postStation = async (station: Station) => {
 
 const deleteStation = async (id: number | string) => {
   try {
-    const response = fetch(`http://localhost:3002/station/${id}`, {
+    const response = fetch(`${baseUrl}/station/${id}`, {
       method: 'DELETE',
     });
     return (await response).json();
@@ -62,7 +64,7 @@ const deleteStation = async (id: number | string) => {
 const getStationStatistics = async (id: string, from: string, to: string) => {
   try {
     const response = fetch(
-      `http://localhost:3002/station/stats/${id}?` + getParams({ from, to })
+      `${baseUrl}/station/stats/${id}?` + getParams({ from, to })
     );
     return (await response).json();
   } catch (error) {
