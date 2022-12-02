@@ -1,20 +1,19 @@
 FROM node:18
 
-#development / production
 ENV NODE_ENV=production
 
 WORKDIR /usr/src/app
 
-COPY ["./backend/package.json", "./backend/package-lock.json*", "./backend/tsconfig.json", "./"]
+COPY ["package.json", "package-lock.json*", "tsconfig.json", "./"]
 
 RUN npm ci
 
-COPY ./backend/src ./src
-COPY ./backend/db ./db
+COPY ./src ./src
+COPY ./db ./db
+COPY ./data ./data
 
 RUN npm run build
 
+EXPOSE 3002
 
-# google docker image build container
-
-CMD [ "node", "./backend/dist/src/index.js" ]
+CMD [ "node", "./dist/src/index.js" ]

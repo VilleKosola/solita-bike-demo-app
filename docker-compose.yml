@@ -1,18 +1,25 @@
 version: '3.8'
 services:
+  # backend:
+    # restart: on-failure
+    # build: 
+    #   dockerfile: ./backend/Dockerfile
+    # links:
+    #   - db
+    # ports:
+    #   - '3003:8000'
+    # volumes:
+    #   - /data
+    #   - ./:/usr/src/app/
+    #   - /usr/src/app/node_modules
+    # depends_on:
+    #   - db
   db:
     build: ./db
-    # restart: always
+    container_name: "db"
     environment:
       POSTGRES_USER: bikeapp
       POSTGRES_PASSWORD: bikeapp
       POSTGRES_DB: bikeapp
     ports:
-      - 5432:5432
-    volumes:
-      - ./data:/var/lib/postgresql/csvs
-  # adminer:
-  #   image: adminer:4.8.1
-  #   restart: always
-  #   ports:
-  #     - 8088:8080
+      - '5432:5432'
