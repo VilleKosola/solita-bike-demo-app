@@ -1,9 +1,8 @@
 DROP TABLE IF EXISTS journey;
 DROP TABLE IF EXISTS station;
 
--- TODO: add constrains handling
 CREATE TABLE station (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     fid INT,
     nimi VARCHAR(100),
     name VARCHAR(100),
