@@ -40,14 +40,18 @@ const StationItem = (props: {
         <p className="text-left">{station.operator}</p>
         <p className="text-left">{station.x_coordinate}</p>
         <p className="text-left">{station.y_coordinate}</p>
-        <p className="flex justify-end items-center">
-          <button
-            onClick={removeStation}
-            className="cursor-pointer border border-solid border-l-gray-400"
-          >
-            Delete
-          </button>
-        </p>
+        {!station.fid ? (
+          <p className="flex justify-end items-center">
+            <button
+              onClick={removeStation}
+              className="cursor-pointer border border-solid border-l-gray-400"
+            >
+              Delete
+            </button>
+          </p>
+        ) : (
+          <p></p>
+        )}
       </li>
       {props.active && (
         <div>
