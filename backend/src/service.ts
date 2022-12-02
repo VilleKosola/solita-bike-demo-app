@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { insertStation, queryJourneyCount, queryJourneys, queryStationAvgDistanceFrom, queryStationAvgDistanceTo, queryStationEndingCount, queryStationEndingToTop, queryStations, queryStationsByIds, queryStationStartingCount, queryStationStartingFromTop, removeStation } from "./queries";
+import { insertJourney, insertStation, queryJourneyCount, queryJourneys, queryStationAvgDistanceFrom, queryStationAvgDistanceTo, queryStationEndingCount, queryStationEndingToTop, queryStations, queryStationsByIds, queryStationStartingCount, queryStationStartingFromTop, removeJourney, removeStation } from "./queries";
 import { Station, StationStatistics } from "./types/Station";
 import crypto from 'crypto';
+import { Journey } from "./types/Journey";
 
   export async function getStations(request: Request, response: Response){
     const limit = (request.query.limit || '100') as string;
@@ -68,7 +69,7 @@ import crypto from 'crypto';
   }
 
   export async function createStation(request: Request, response: Response) {
-    return await insertStation({...request.body, id: crypto.randomInt(9999999).toString()} as Station)
+    return await insertStation(request.body as Station)
     .then((res) => response.status(200).json(res?.rows))
     .catch((err) => response.status(500).json(err.message))   
   }
@@ -78,3 +79,13 @@ import crypto from 'crypto';
     .catch((err) => response.status(500).json(err.message))   
   }
 
+  export async function createJourney(request: Request, response: Response) {
+    return await insertJourney(request.body as Journey)
+    .then((res) => response.status(200).json(res?.rows))
+    .catch((err) => response.status(500).json(err.message))   
+  }
+  export async function deleteJourney(request: Request, response: Response) {
+    return await removeJourney(request.params.id)
+    .then((res) => response.status(200).json([]))
+    .catch((err) => response.status(500).json(err.message))   
+  }

@@ -1,14 +1,11 @@
 import express, { Express } from 'express';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import * as service from './service';
 import cors from 'cors';
 import { initData } from './init-db-data';
 
-dotenv.config();
-
 const app: Express = express();
-const port = process.env['NODE_PORT'] || 3002;
+const port = 3002;
 
 
 app.use(bodyParser.json())
@@ -36,6 +33,8 @@ app.post('/station', service.createStation)
 app.delete('/station/:id', service.deleteStation)
 
 app.get('/journey', service.getJourneys)
+app.post('/journey', service.createJourney)
+app.delete('/journey/:id', service.deleteJourney)
 app.get('/journey-count', service.getJourneyCount)
 
 app.listen(port, () => {

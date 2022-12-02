@@ -1,6 +1,7 @@
 import * as db from '../db/index'
 import { select, like, between, or, insert, delete as d } from 'sql-bricks'
 import { Station } from './types/Station';
+import { Journey } from './types/Journey';
 
 interface JournalParams {
   limit: string,
@@ -93,7 +94,6 @@ export function queryStationEndingToTop(id: string, from: string, to: string) {
 }
 
 export async function insertStation(station: Station) {
-  
   let query = insert().into('station', Object.keys(station)).values(Object.values(station)).toString();
   return db.query(query + ' RETURNING *');
 }
@@ -115,4 +115,12 @@ export function queryJourneys(params: JournalParams, searchParams: SearchParams,
   return db.query(queryString);
 }
 
+export async function insertJourney(station: Journey) {
+  let query = insert().into('journey', Object.keys(station)).values(Object.values(station)).toString();
+  return db.query(query + ' RETURNING *');
+}
 
+export function removeJourney(id: string) {
+  let query = d().from('journey').where('id', id).toString();
+  return db.query(query + ' RETURNING id');
+}
