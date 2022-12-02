@@ -5,10 +5,11 @@ import * as service from './service';
 import cors from 'cors';
 import { initData } from './init-db-data';
 
-const app: Express = express();
-const port = process.env['PORT'] || 3002;
-
 dotenv.config();
+
+const app: Express = express();
+const port = process.env['NODE_PORT'] || 3002;
+
 
 app.use(bodyParser.json())
 app.use(
