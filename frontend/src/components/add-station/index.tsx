@@ -4,7 +4,6 @@ import { postStation } from '../../services/StationService';
 import { Station } from '../../types/station';
 
 const defaultStation = {
-  fid: 1000,
   nimi: 'aaaaaa',
   osoite: 'asd',
   city: 'adsf',
