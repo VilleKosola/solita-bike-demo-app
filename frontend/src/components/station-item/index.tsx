@@ -65,6 +65,8 @@ const StationItem = (props: {
                 id: station.fid,
               },
             ]}
+            onClick={() => ''}
+            enableMarkerAdd={false}
           />
         </div>
       )}

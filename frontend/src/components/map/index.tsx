@@ -1,5 +1,13 @@
+import { LeafletMouseEvent } from 'leaflet';
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
 
 interface Location {
   x: number;
@@ -8,10 +16,34 @@ interface Location {
   id: string | number;
 }
 
-const LeafletMap = (props: { locations: Location[] }) => {
-  const [locations, setLocations] = React.useState([
-    props.locations[0] ?? { x: 24.95, y: 60.21, name: 'placeholder', id: 123 },
-  ] as Location[]);
+const MapEventHandler = (props: {
+  onClick: { (event: LeafletMouseEvent): void };
+}) => {
+  const map = useMapEvents({
+    click: (e) => {
+      // layerGroup.clearLayers();
+      map.eachLayer((layer: any) => {
+        if (layer['_latlng'] !== undefined) {
+          layer.remove();
+        }
+      });
+      const { lat, lng } = e.latlng;
+      L.marker([lat, lng]).addTo(map);
+      props.onClick(e);
+    },
+  });
+  return null;
+};
+
+const LeafletMap = (props: {
+  locations: Location[];
+  onClick: { (event: LeafletMouseEvent): void };
+  enableMarkerAdd: boolean;
+}) => {
+  const [locations, setLocations] = React.useState([] as Location[]);
+  const defLocation = locations.length
+    ? locations[0]
+    : { x: 24.95, y: 60.21, name: 'placeholder', id: 123 };
 
   React.useEffect(() => {
     if (props.locations?.length) {
@@ -22,11 +54,14 @@ const LeafletMap = (props: { locations: Location[] }) => {
   return (
     <MapContainer
       preferCanvas={true}
-      center={[locations[0].y, locations[0].x]}
+      center={[defLocation.y, defLocation.x]}
       zoom={10}
       scrollWheelZoom={false}
       style={{ height: '250px', width: '100vw' }}
     >
+      {props.enableMarkerAdd && (
+        <MapEventHandler onClick={props.onClick}></MapEventHandler>
+      )}
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

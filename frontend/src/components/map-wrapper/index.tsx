@@ -29,7 +29,13 @@ function MapWrapper(props: { stationIds: string[] }) {
     }
   }, [props.stationIds]);
 
-  return <LeafletMap locations={stations} />;
+  return (
+    <LeafletMap
+      locations={stations}
+      onClick={() => ''}
+      enableMarkerAdd={false}
+    />
+  );
 }
 
 export default MapWrapper;
