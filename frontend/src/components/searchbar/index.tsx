@@ -3,8 +3,10 @@ import { Station } from '../../types/station';
 
 interface SearchbarProps {
   searchStringChange: { (value: string): void };
+  stationIdChange: { (name: string, value: number | string): void };
   searchString: string;
   stations: Station[];
+  name?: string;
 }
 
 const Searchbar = (props: SearchbarProps) => {
@@ -17,7 +19,7 @@ const Searchbar = (props: SearchbarProps) => {
         searchString !== '' &&
         [s.name, s.nimi, s.namn].some(
           (n) =>
-            n?.includes(searchString) &&
+            n?.toLowerCase().includes(searchString.toLowerCase()) &&
             n?.toLowerCase() !== searchString.toLowerCase()
         )
       );
@@ -52,6 +54,7 @@ const Searchbar = (props: SearchbarProps) => {
             onClick={(e) => {
               setSearchString(s.nimi);
               props.searchStringChange(s.nimi);
+              props.stationIdChange(props.name || '', s.id);
             }}
           >
             {s.name}

@@ -34,6 +34,7 @@ const Stations = () => {
           searchStringChange={setStationName}
           searchString={stationName}
           stations={stations}
+          stationIdChange={() => ''}
         ></Searchbar>
         <Pagination
           limit={limit}

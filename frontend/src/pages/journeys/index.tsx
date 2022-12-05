@@ -88,6 +88,7 @@ const Journeys = () => {
           searchStringChange={setStationName}
           searchString={stationName}
           stations={stations}
+          stationIdChange={() => ''}
         ></Searchbar>
         <Pagination
           limit={limit}
