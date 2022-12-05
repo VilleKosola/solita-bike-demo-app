@@ -4,12 +4,12 @@ import AddStation from '../../components/add-station';
 import FilterContainer from '../../components/filter-container';
 
 const AddNew = () => {
-  //   const [path, setPath] = React.useState(window.location.pathname);
+  const [active, setActive] = React.useState('S');
 
   return (
     <FilterContainer>
-      <AddStation />
-      <AddJourney />
+      <AddStation active={active === 'S'} handleActivation={setActive} />
+      <AddJourney active={active === 'J'} handleActivation={setActive} />
     </FilterContainer>
   );
 };
