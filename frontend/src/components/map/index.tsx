@@ -1,13 +1,13 @@
 import { LeafletMouseEvent } from 'leaflet';
 import React from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from 'react-leaflet';
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
+
+const myIcon = L.icon({
+  iconUrl: `https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png`, //'/src/assets/img/mapmarker.png',
+  iconAnchor: [20, 41],
+  shadowUrl: `https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png`, //'/src/assets/img/mapmarkershadow.png',
+});
 
 interface Location {
   x: number;
@@ -28,7 +28,7 @@ const MapEventHandler = (props: {
         }
       });
       const { lat, lng } = e.latlng;
-      L.marker([lat, lng]).addTo(map);
+      L.marker([lat, lng], { icon: myIcon }).addTo(map);
       props.onClick(e);
     },
   });
@@ -41,37 +41,43 @@ const LeafletMap = (props: {
   enableMarkerAdd: boolean;
   enableZoom?: boolean;
 }) => {
-  const [locations, setLocations] = React.useState([] as Location[]);
+  const { locations, enableMarkerAdd, enableZoom } = props;
+  // eslint-disable-next-line
+  const [map, setMap] = React.useState(null as any);
   const defLocation = locations.length
     ? locations[0]
     : { x: 24.95, y: 60.21, name: 'placeholder', id: 123 };
 
   React.useEffect(() => {
-    if (props.locations?.length) {
-      setLocations(props.locations);
+    if (locations?.length && map) {
+      map.eachLayer((layer: L.Layer) => {
+        const l = layer as unknown as { _latlng: string };
+        if (l['_latlng'] !== undefined) {
+          layer.remove();
+        }
+      });
+      locations.forEach((l) => {
+        L.marker([l.y, l.x], { icon: myIcon }).addTo(map);
+      });
     }
-  }, [props.locations]);
+  }, [locations, map]);
 
   return (
     <MapContainer
       preferCanvas={true}
       center={[defLocation.y, defLocation.x]}
       zoom={10}
-      scrollWheelZoom={props.enableZoom}
+      scrollWheelZoom={enableZoom}
       style={{ height: '250px', width: '100vw' }}
+      ref={setMap}
     >
-      {props.enableMarkerAdd && (
+      {enableMarkerAdd && (
         <MapEventHandler onClick={props.onClick}></MapEventHandler>
       )}
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {locations.map((l) => (
-        <Marker position={[l.y, l.x]} key={l.id}>
-          <Popup>{l.name}</Popup>
-        </Marker>
-      ))}
     </MapContainer>
   );
 };
