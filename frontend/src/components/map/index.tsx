@@ -3,18 +3,22 @@ import React from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 
-const myIcon = L.icon({
-  iconUrl: `https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png`, //'/src/assets/img/mapmarker.png',
-  iconAnchor: [20, 41],
-  shadowUrl: `https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png`, //'/src/assets/img/mapmarkershadow.png',
-});
-
 interface Location {
   x: number;
   y: number;
   name: string;
+  color?: string;
   id: string | number;
 }
+
+const createIcon = (options: { color: string }) => {
+  //'red'|'blue'|'green'
+  return L.icon({
+    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${options.color}.png`,
+    iconAnchor: [20, 41],
+    shadowUrl: `https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png`,
+  });
+};
 
 const MapEventHandler = (props: {
   onClick: { (event: LeafletMouseEvent): void };
@@ -28,7 +32,7 @@ const MapEventHandler = (props: {
         }
       });
       const { lat, lng } = e.latlng;
-      L.marker([lat, lng], { icon: myIcon }).addTo(map);
+      L.marker([lat, lng], { icon: createIcon({ color: 'blue' }) }).addTo(map);
       props.onClick(e);
     },
   });
@@ -57,7 +61,9 @@ const LeafletMap = (props: {
         }
       });
       locations.forEach((l) => {
-        L.marker([l.y, l.x], { icon: myIcon }).addTo(map);
+        L.marker([l.y, l.x], {
+          icon: createIcon({ color: l.color || 'blue' }),
+        }).addTo(map);
       });
     }
   }, [locations, map]);
