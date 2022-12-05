@@ -48,6 +48,8 @@ code {
   min-width: 230px;
   border: 1px solid #ddd;
   z-index: 1;
+  max-height: 350px;
+  overflow: scroll;
 }
 
 /* Links inside the dropdown */
@@ -96,4 +98,8 @@ code {
 input {
   border: solid 1px gray;
   border-radius: 5px;
+}
+
+.leaflet-top, .leaflet-bottom, .leaflet-pane {
+ z-index: 0 !important;
 }
