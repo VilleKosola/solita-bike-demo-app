@@ -21,9 +21,9 @@ const MapEventHandler = (props: {
 }) => {
   const map = useMapEvents({
     click: (e) => {
-      // layerGroup.clearLayers();
-      map.eachLayer((layer: any) => {
-        if (layer['_latlng'] !== undefined) {
+      map.eachLayer((layer) => {
+        const l = layer as unknown as { _latlng: string };
+        if (l['_latlng'] !== undefined) {
           layer.remove();
         }
       });
@@ -39,6 +39,7 @@ const LeafletMap = (props: {
   locations: Location[];
   onClick: { (event: LeafletMouseEvent): void };
   enableMarkerAdd: boolean;
+  enableZoom?: boolean;
 }) => {
   const [locations, setLocations] = React.useState([] as Location[]);
   const defLocation = locations.length
@@ -56,7 +57,7 @@ const LeafletMap = (props: {
       preferCanvas={true}
       center={[defLocation.y, defLocation.x]}
       zoom={10}
-      scrollWheelZoom={false}
+      scrollWheelZoom={props.enableZoom}
       style={{ height: '250px', width: '100vw' }}
     >
       {props.enableMarkerAdd && (
