@@ -20,8 +20,8 @@ const Journeys = () => {
 
   const [stationName, setStationName] = React.useState('');
   // const [startStationName, setStartStationName] = React.useState('');
-  const [from, setFrom] = React.useState(new Date('2021-04-01 00:00'));
-  const [to, setTo] = React.useState(new Date('2021-09-01 00:00'));
+  const [from, setFrom] = React.useState(new Date('2020-04-01 00:00'));
+  const [to, setTo] = React.useState(new Date('2023-09-01 00:00'));
   const [minDist, setMinDist] = React.useState(0);
   const [maxDist, setMaxDist] = React.useState(100);
   const [minDur, setMinDur] = React.useState(0);
