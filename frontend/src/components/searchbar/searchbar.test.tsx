@@ -26,6 +26,7 @@ test('test search string renders only one result', async () => {
       searchStringChange={() => ''}
       searchString={'Aalto-yliopisto (M), Ko'}
       stations={stations}
+      stationIdChange={() => ''}
     />
   );
   const items: HTMLElement[] = await screen.findAllByTestId('search-item');
