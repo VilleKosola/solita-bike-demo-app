@@ -57,7 +57,7 @@ const Searchbar = (props: SearchbarProps) => {
               props.stationIdChange(props.name || '', s.id);
             }}
           >
-            {s.name}
+            {s.nimi}
           </span>
         ))}
       </div>
