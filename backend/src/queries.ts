@@ -26,7 +26,7 @@ export async function queryStations(params: { limit: string, offset: string, ord
   return db.query(`
       SELECT * 
       FROM station 
-      WHERE nimi LIKE '%${params.stationname}%'
+      WHERE lower(nimi) LIKE '%${params.stationname.toLowerCase()}%'
       ORDER BY ${params.orderBy} ${params.ordering} 
       LIMIT ${params.limit} 
       OFFSET ${params.offset}
