@@ -3,14 +3,16 @@ import React, { useState } from 'react';
 import { useStationsDispatch } from '../../contexts/stations-context';
 import { postStation } from '../../services/StationService';
 import { Station } from '../../types/station';
+import InputWithLabel from '../input-with-label';
 import LeafletMap from '../map';
 
 const defaultStation = {
   nimi: '',
   osoite: '',
   city: '',
-  x_coordinate: 25,
-  y_coordinate: 60,
+  x_coordinate: 24.95,
+  y_coordinate: 60.21,
+  id: '',
 } as Station;
 
 const AddStation = () => {
@@ -29,8 +31,11 @@ const AddStation = () => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewStation({ ...newStation, [event.target.name]: event.target.value });
-    console.log(newStation);
+    setNewStation({
+      ...newStation,
+      [event.target.name]: event.target.value,
+      id: crypto.randomUUID(),
+    });
   };
 
   const handleMapChange = (event: LeafletMouseEvent) => {
@@ -39,53 +44,67 @@ const AddStation = () => {
       x_coordinate: Number(event.latlng.lng.toFixed(2)),
       y_coordinate: Number(event.latlng.lat.toFixed(2)),
     });
-    console.log(newStation);
   };
 
   return (
     <>
-      <input
-        type="text"
-        name="nimi"
+      <div className="w-full text-center font-bold text-lg border-t-2 border-t-gray-300">
+        Station
+      </div>
+      <InputWithLabel
+        label={'Name'}
+        type={'string'}
         value={newStation.nimi}
-        onChange={handleChange}
-      ></input>
-      <input
-        type="text"
-        name="osoite"
+        changeFn={handleChange}
+        name={'nimi'}
+      ></InputWithLabel>
+      <InputWithLabel
+        label={'Address'}
+        type={'string'}
         value={newStation.osoite}
-        onChange={handleChange}
-      ></input>
-      <input
-        type="text"
-        name="city"
+        changeFn={handleChange}
+        name={'osoite'}
+      ></InputWithLabel>
+      <InputWithLabel
+        label={'City'}
+        type={'string'}
         value={newStation.city}
-        onChange={handleChange}
-      ></input>
-
-      <input
-        type="number"
-        name="x_coordinate"
+        changeFn={handleChange}
+        name={'city'}
+      ></InputWithLabel>
+      <InputWithLabel
+        label={'Longitude'}
+        type={'number'}
         value={newStation.x_coordinate}
-        onChange={handleChange}
-      ></input>
-      <input
-        type="number"
-        name="y_coordinate"
+        changeFn={handleChange}
+        name={'x_coordinate'}
+      ></InputWithLabel>
+      <InputWithLabel
+        label={'Latitude'}
+        type={'number'}
         value={newStation.y_coordinate}
-        onChange={handleChange}
-      ></input>
+        changeFn={handleChange}
+        name={'y_coordinate'}
+      ></InputWithLabel>
       <button
-        className="border border-gray-500 border-solid p-2"
+        className="border border-gray-500 border-solid p-1 m-2"
         onClick={sendStation}
       >
         Add New
       </button>
 
       <LeafletMap
-        locations={[]}
+        locations={[
+          {
+            x: newStation.x_coordinate,
+            y: newStation.y_coordinate,
+            name: newStation.nimi,
+            id: newStation.id,
+          },
+        ]}
         onClick={handleMapChange}
         enableMarkerAdd={true}
+        enableZoom={true}
       ></LeafletMap>
     </>
   );

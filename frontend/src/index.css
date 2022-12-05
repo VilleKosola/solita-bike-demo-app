@@ -20,7 +20,7 @@ code {
 /* The search field */
 #myInput {
   box-sizing: border-box;
-  background-image: url('assets/img/searchicon.png');
+  background-image: url('/src/assets/img/searchicon.png');
   background-position: 10px 10px;
   background-repeat: no-repeat;
   background-size: 15px;
@@ -91,4 +91,9 @@ code {
 .ASC {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+input {
+  border: solid 1px gray;
+  border-radius: 5px;
 }

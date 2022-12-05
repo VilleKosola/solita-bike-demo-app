@@ -1,5 +1,5 @@
 export interface Station {
-  id: number;
+  id: number | string;
   fid: number;
   nimi: string;
   name: string;
@@ -15,7 +15,7 @@ export interface Station {
 }
 
 export interface StationStatistics {
-  id: number;
+  id: number | string;
   starting_count?: number;
   ending_count?: number;
   avg_dist_from?: number;
