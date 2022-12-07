@@ -28,6 +28,8 @@
   - **Frontend**
     - Start frontend by running `npm i` and `npm start` in frontend folder
 
+<!-- add production yml -> db -> backend -> frontend nginx -->
+
 ## Tests
     - run tests by running 'npm test' in frontend or backend folder
 

@@ -1,19 +1,12 @@
 version: '3.8'
 services:
-  # backend:
-    # restart: on-failure
-    # build: 
-    #   dockerfile: ./backend/Dockerfile
-    # links:
-    #   - db
-    # ports:
-    #   - '3003:8000'
-    # volumes:
-    #   - /data
-    #   - ./:/usr/src/app/
-    #   - /usr/src/app/node_modules
-    # depends_on:
-    #   - db
+  api:
+    container_name: "api"
+    build: ./backend
+    ports:
+      - '3002:80'
+    links:
+      - "db"
   db:
     build: ./db
     container_name: "db"
@@ -23,3 +16,22 @@ services:
       POSTGRES_DB: bikeapp
     ports:
       - '5432:5432'
+  client: 
+    build: ./frontend
+    container_name: "frontend"
+    links:
+      - "api"
+    # expose:
+    #   - 80
+    ports:
+      - "3001:80"
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - "80:80"
+  #   container_name: "production_nginx"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #   links:
+  #     - "api"
+  #     - "client"

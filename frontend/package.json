@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@imaginary-cloud/eslint-config-react": "^2.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
+    "@types/leaflet": "^1.9.0",
+    "@types/lodash": "^4.14.190",
     "@types/node": "^16.18.3",
     "@types/react": "^18.0.25",
     "@types/react-datetime-picker": "^3.4.1",
@@ -21,7 +21,9 @@
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.1.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-router-dom": "^6.4.3",
+    "tailwindcss": "^3.2.3"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
@@ -49,8 +51,6 @@
     ]
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.0",
-    "@types/lodash": "^4.14.190",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
@@ -59,9 +59,9 @@
     "msw": "^0.48.3",
     "postcss": "^8.4.18",
     "prettier": "^2.7.1",
-    "react-router-dom": "^6.4.3",
     "react-test-renderer": "^18.2.0",
-    "tailwindcss": "^3.2.3",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "@imaginary-cloud/eslint-config-react": "^2.0.1",
+    "@types/jest": "^27.5.2"
   }
 }

@@ -1,0 +1,6 @@
+.git
+.DS_Store
+.env
+.eslintrc.json
+.prettierrc.json
+node_modules

@@ -1,19 +1,30 @@
-FROM node:18
+# split to build and run images as multi stage
+FROM node:18-alpine AS build
 
 ENV NODE_ENV=production
 
 WORKDIR /usr/src/app
 
-COPY [".env", "package.json", "package-lock.json*", "tsconfig.json", "./"]
+COPY ["package.json", "package-lock.json*", "tsconfig.json", "./"]
 
 RUN npm ci
 
 COPY ./src ./src
 COPY ./db ./db
-COPY ./data ./data
 
 RUN npm run build
 
-EXPOSE 3002
+
+
+FROM node:18-alpine AS production
+
+ENV NODE_ENV=production
+
+COPY --from=build /usr/src/app /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY ./data ./data
 
 CMD [ "node", "./dist/src/index.js" ]
+
