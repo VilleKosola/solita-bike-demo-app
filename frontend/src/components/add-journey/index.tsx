@@ -26,7 +26,7 @@ const AddJourney = (props: {
 }) => {
   const [newJourney, setNewJourney] = useState(defaultJourney);
   const stations = useStations();
-  const {handleChange, errors} = useForm();
+  const { handleChange, errors } = useForm();
 
   const sendStation = () => {
     postJourney({
@@ -73,7 +73,7 @@ const AddJourney = (props: {
       </div>
       {props.active && (
         <div className="flex flex-wrap justify-between items-start w-full m-2">
-          <span className='flex flex-col items-start justify-start pb-1'>
+          <span className="flex flex-col items-start justify-start pb-1">
             <label htmlFor={'departure_station'}>Departure station: </label>
             <Searchbar
               searchStringChange={() => ''}
@@ -82,8 +82,8 @@ const AddJourney = (props: {
               name="departure_station"
               stationIdChange={handleStationIdChange}
             ></Searchbar>
-          </span>  
-          <span className='flex flex-col items-start justify-start pb-1'>
+          </span>
+          <span className="flex flex-col items-start justify-start pb-1">
             <label htmlFor={'return_station'}>Return station: </label>
             <Searchbar
               searchStringChange={() => ''}
@@ -97,24 +97,35 @@ const AddJourney = (props: {
             label={'Distance (m)'}
             type={'number'}
             value={newJourney.distance}
-            changeFn={(e) => {handleChange(e); handleInputChange(e);}}
+            changeFn={(e) => {
+              handleChange(e);
+              handleInputChange(e);
+            }}
             name={'distance'}
           ></InputWithLabel>
-          <span className='flex flex-col items-start justify-start pb-1'>
+          <span className="flex flex-col items-start justify-start pb-1">
             <label htmlFor={'date'}>Departure time: </label>
             <DateTimePicker
-              onChange={(e) => {handleChange({target:{value: e, name: 'date'}}); handleStartDateChange(e);}}
+              onChange={(e) => {
+                handleChange({ target: { value: e, name: 'date' } });
+                handleStartDateChange(e);
+              }}
               value={new Date(newJourney.departuredate)}
             ></DateTimePicker>
-              {
-                errors.date && <h3 className='capitalize text-red-400 max-w-fit'>{errors.name}</h3>
-              }
+            {errors.date && (
+              <h3 className="capitalize text-red-400 max-w-fit">
+                {errors.name}
+              </h3>
+            )}
           </span>
           <InputWithLabel
             label={'Duration (s)'}
             type={'number'}
             value={newJourney.duration}
-            changeFn={(e) => {handleChange(e); handleInputChange(e);}}
+            changeFn={(e) => {
+              handleChange(e);
+              handleInputChange(e);
+            }}
             name={'duration'}
           ></InputWithLabel>
           <button

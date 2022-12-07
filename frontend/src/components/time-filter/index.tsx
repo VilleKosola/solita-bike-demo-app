@@ -13,7 +13,10 @@ const TimeFilter = (props: TimeFilterProps) => {
   const [to, setTo] = React.useState(props.to);
 
   return (
-    <div data-testid="time-filter-parent" className="flex justify-center items-center p-3">
+    <div
+      data-testid="time-filter-parent"
+      className="flex justify-center items-center p-3"
+    >
       <DatePicker
         onChange={(value: Date) => {
           setFrom(value);

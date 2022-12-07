@@ -10,9 +10,9 @@ interface inputProps {
 }
 
 const InputWithLabel = (props: inputProps) => {
-  const {handleChange, errors} = useForm();
+  const { handleChange, errors } = useForm();
   return (
-    <span className='flex flex-col items-start justify-start pb-1 w-60'>
+    <span className="flex flex-col items-start justify-start pb-1 w-60">
       <label htmlFor={props.label}>{props.label}: </label>
       <input
         type={props.type}
@@ -24,9 +24,9 @@ const InputWithLabel = (props: inputProps) => {
           handleChange(e);
         }}
       ></input>
-      {
-        errors.name && <h3 className='capitalize text-red-400 max-w-fit'>{errors.name}</h3>
-      }
+      {errors.name && (
+        <h3 className="capitalize text-red-400 max-w-fit">{errors.name}</h3>
+      )}
     </span>
   );
 };
