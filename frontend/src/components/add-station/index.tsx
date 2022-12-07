@@ -58,14 +58,14 @@ const AddStation = (props: {
         Station
       </div>
       {props.active && (
-        <>
+        <div className="flex flex-wrap justify-between items-start w-full m-2">
           <InputWithLabel
             label={'Name'}
             type={'string'}
             value={newStation.nimi}
             changeFn={handleChange}
             name={'nimi'}
-          ></InputWithLabel>
+          />
           <InputWithLabel
             label={'Address'}
             type={'string'}
@@ -113,7 +113,8 @@ const AddStation = (props: {
             enableMarkerAdd={true}
             enableZoom={true}
           ></LeafletMap>
-        </>
+        </div>
+
       )}
     </>
   );

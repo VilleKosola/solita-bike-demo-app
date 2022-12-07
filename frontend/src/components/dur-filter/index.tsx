@@ -42,7 +42,7 @@ const DurFilter = (props: DurFilterProps) => {
   return (
     <div
       data-testid="time-filter-parent"
-      className="flex align-middle justify-center p-3"
+      className="flex items-center justify-center p-3"
     >
       <span>Duration: </span>
       {/* Move inputs and label to component */}

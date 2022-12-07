@@ -23,7 +23,7 @@ function MapWrapper(props: { stationIds: string[] }) {
             y: st.y_coordinate,
             name: st.nimi,
             id: st.fid,
-            color: i === 0 ? 'green' : 'red',
+            color: st.id.toString() === props.stationIds[0] ? 'green' : 'red',
           };
         });
         setStations(s);

@@ -18,7 +18,7 @@ code {
 
 /* Searchbar styling */
 /* The search field */
-#myInput {
+.searchbar {
   box-sizing: border-box;
   background-image: url('/src/assets/img/searchicon.png');
   background-position: 10px 10px;
@@ -27,12 +27,12 @@ code {
   font-size: 16px;
   padding: 5px 5px 5px 45px;  
   border: none;
-  width: 315px;
-  border-bottom: 1px solid #ddd;
+  width: 240px;
+  /* border-bottom: 1px solid #ddd; */
 }
 
 /* The search field when it gets focus/clicked on */
-#myInput:focus {outline: 3px solid #ddd;}
+.searchbar:focus {outline: 3px solid #ddd;}
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -45,11 +45,12 @@ code {
   display: inline-block;
   position: absolute;
   background-color: #f6f6f6;
-  min-width: 230px;
+  min-width: 240px;
   border: 1px solid #ddd;
   z-index: 1;
   max-height: 350px;
-  overflow: scroll;
+  overflow: auto;
+  border-radius: 5px;
 }
 
 /* Links inside the dropdown */
@@ -71,7 +72,7 @@ code {
   min-width: calc(100% - 320px);
 }
 .searchbar-parent {
-  width: 320px;
+  width: 250px;
   height: 35px;
 }
 
@@ -95,8 +96,17 @@ code {
   -webkit-transform: rotate(45deg);
 }
 
-input {
-  border: solid 1px gray;
+input, .react-datetime-picker__wrapper {
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  padding: 5px 5px 5px 5px;
+  width: 100%;
+}
+.react-datetime-picker__wrapper {
+  border: none !important;
+}
+.react-datetime-picker {
+  border: solid 1px #ddd !important;
   border-radius: 5px;
 }
 

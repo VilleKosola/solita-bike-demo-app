@@ -34,14 +34,15 @@ const Searchbar = (props: SearchbarProps) => {
   return (
     <div
       data-testid="searchbar-parent"
-      className="flex relative justify-center searchbar-parent pl-3"
+      className="flex relative searchbar-parent"
     >
       <div id="myDropdown" className="dropdown-content show">
         <input
           type="text"
           value={searchString}
           placeholder="Search.."
-          id="myInput"
+          id={props.name}
+          className="searchbar"
           onChange={(e) => {
             setSearchString(e.target.value);
             props.searchStringChange(e.target.value);
