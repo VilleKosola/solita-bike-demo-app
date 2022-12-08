@@ -26,5 +26,7 @@ WORKDIR /usr/src/app
 
 COPY ./data ./data
 
+EXPOSE 3002
+
 CMD [ "node", "./dist/src/index.js" ]
 

@@ -1,7 +1,7 @@
 import { Journey } from '../types/journey';
 import { getParams } from './helperService';
 
-const baseUrl = 'http://localhost:3001/api';
+const baseUrl = 'http://localhost/api';
 
 export interface JournalParams {
   limit: number;

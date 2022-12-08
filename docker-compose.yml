@@ -3,8 +3,8 @@ services:
   api:
     container_name: "api"
     build: ./backend
-    ports:
-      - '3002:80'
+    # ports:
+    #   - "3002:3002"
     links:
       - "db"
   db:
@@ -23,15 +23,14 @@ services:
       - "api"
     # expose:
     #   - 80
+    # ports:
+    #   - "3001:80"
+    #   - "80:80"
+  nginx:
+    depends_on:
+      - client
+      - api
+    restart: always # because it is routing traffic to our entire app
+    build: ./nginx
     ports:
-      - "3001:80"
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - "80:80"
-  #   container_name: "production_nginx"
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-  #   links:
-  #     - "api"
-  #     - "client"
+      - '80:80'

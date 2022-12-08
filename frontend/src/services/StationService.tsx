@@ -1,7 +1,7 @@
 import { Station } from '../types/station';
 import { getParams } from './helperService';
 
-const baseUrl = 'http://localhost:3001/api';
+const baseUrl = 'http://localhost/api';
 
 const getAllStations = async (p: {
   limit: number;
