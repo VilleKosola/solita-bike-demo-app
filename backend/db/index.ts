@@ -6,11 +6,10 @@ import dotenv from 'dotenv';
   dotenv.config();
 
   const vars = process.env
-  const production = vars['NODE_ENV'] === 'production'
 
   const poolOptions = {
     user: vars['DB_USER'] || 'bikeapp',
-    host: !production ? vars['DB_HOST'] : 'db',
+    host: vars['DB_HOST'] || '',
     database: vars['DB_NAME'] || 'bikeapp',
     password: vars['DB_PASSWORD'] || 'bikeapp',
     port: Number(vars['DB_PORT']) || 5432,

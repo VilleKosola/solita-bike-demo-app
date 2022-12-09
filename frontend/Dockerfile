@@ -7,16 +7,16 @@ RUN npm ci --only=production --ignore-scripts
 COPY . ./
 RUN npm run build
 
-FROM nginx 
-EXPOSE 3001
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build usr/app/build /usr/share/nginx/html
+# FROM nginx 
+# EXPOSE 3001
+# COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+# COPY --from=build usr/app/build /usr/share/nginx/html
 
 #run app
-# FROM nginx:1.23.1-alpine
-# ENV NODE_ENV production
-# COPY --from=build /usr/app/build /usr/share/nginx/html
-# RUN rm /etc/nginx/conf.d/default.conf
-# COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-# EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
+FROM nginx:1.23.1-alpine
+ENV NODE_ENV production
+COPY --from=build /usr/app/build /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

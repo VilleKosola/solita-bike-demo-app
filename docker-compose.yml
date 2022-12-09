@@ -1,12 +1,5 @@
 version: '3.8'
 services:
-  api:
-    container_name: "api"
-    build: ./backend
-    # ports:
-    #   - "3002:3002"
-    links:
-      - "db"
   db:
     build: ./db
     container_name: "db"
@@ -16,21 +9,3 @@ services:
       POSTGRES_DB: bikeapp
     ports:
       - '5432:5432'
-  client: 
-    build: ./frontend
-    container_name: "frontend"
-    links:
-      - "api"
-    # expose:
-    #   - 80
-    # ports:
-    #   - "3001:80"
-    #   - "80:80"
-  nginx:
-    depends_on:
-      - client
-      - api
-    restart: always # because it is routing traffic to our entire app
-    build: ./nginx
-    ports:
-      - '80:80'

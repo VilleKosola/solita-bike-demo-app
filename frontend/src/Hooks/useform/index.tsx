@@ -13,10 +13,10 @@ const useForm = () => {
   //Errors
   const [errors, setErrors] = useState({} as errorTypes);
 
-  // eslint-disable-next-line
   const validate = (
     event: React.ChangeEvent<HTMLInputElement>,
     name: string,
+    // eslint-disable-next-line
     value: any
   ) => {
     //A function to validate each input values

@@ -1,7 +1,6 @@
 import { Station } from '../types/station';
 import { getParams } from './helperService';
-
-const baseUrl = 'http://localhost/api';
+import { baseUrl } from '../globals';
 
 const getAllStations = async (p: {
   limit: number;
