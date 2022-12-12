@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  api:
+    container_name: "api"
+    build: ./backend
+    environment:
+      DB_USER: bikeapp_prod
+      DB_PASSWORD: sadfgsdfg
+      DB_NAME: bikeapp
+      DB_PORT: 5433
+      DB_HOST: db
+    links:
+      - "db"
+    depends_on:
+      - db
+  db:
+    build: ./db
+    container_name: "db"
+    environment:
+      POSTGRES_USER: bikeapp_prod
+      POSTGRES_PASSWORD: sadfgsdfg
+      POSTGRES_DB: bikeapp
+    ports:
+      - '5433:5432'
+    command: -p 5433
+  client: 
+    build: ./frontend
+    container_name: "frontend"
+    links:
+      - "api"
+    ports:
+      - '80:80'

@@ -14,7 +14,8 @@
 
 ## Running
   ### Production environment
-    - Start the database with image build by running `docker-compose -f docker-compose.prod.yml up --build` in repo root.
+  - Start the database with image build by running `docker-compose -f docker-compose.prod.yml up --build` in repo root.
+    **Note!** If you have started dev environment before running production environment you may have to remove volumes from docker by running `docker-compose down --volumes`
 
   ### Dev environment
   - **Database**
