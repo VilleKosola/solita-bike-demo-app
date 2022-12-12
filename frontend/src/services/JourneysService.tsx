@@ -2,7 +2,6 @@ import { Journey } from '../types/journey';
 import { getParams } from './helperService';
 import { baseUrl } from '../globals';
 
-
 export interface JournalParams {
   limit: number;
   offset: number;

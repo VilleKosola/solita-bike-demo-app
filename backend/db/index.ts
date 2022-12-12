@@ -15,8 +15,6 @@ import dotenv from 'dotenv';
     port: Number(vars['DB_PORT']) || 5432,
   }
 
-  console.log(poolOptions)
-
   const client: Pool = new Pool(poolOptions);
 
 

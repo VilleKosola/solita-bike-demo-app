@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { insertJourney, insertStation, queryJourneyCount, queryJourneys, queryStationAvgDistanceFrom, queryStationAvgDistanceTo, queryStationEndingCount, queryStationEndingToTop, queryStations, queryStationsByIds, queryStationStartingCount, queryStationStartingFromTop, removeJourney, removeStation } from "./queries";
 import { Station, StationStatistics } from "./types/Station";
-import crypto from 'crypto';
 import { Journey } from "./types/Journey";
 
   export async function getStations(request: Request, response: Response){
