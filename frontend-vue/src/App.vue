@@ -5,7 +5,7 @@ import { useStationStore } from "./stores/stations";
 import type { Station } from "./types/station";
 
 const store = useStationStore()
-fetch("http://localhost:3002/stations")
+fetch("http://localhost:3002/stations?limit=500")
   .then(response => response.json())
   .then((data: Station[]) => (store.setStations(data)));
 </script>

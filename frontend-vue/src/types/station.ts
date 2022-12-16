@@ -5,11 +5,11 @@ export interface Station {
   name: string;
   namn: string;
   osoite: string;
-  address?: string;
+  address: string;
   city: string;
-  stad?: string;
-  operator?: string;
-  capasity?: string | number;
+  stad: string;
+  operator: string;
+  capasity: string | number;
   x_coordinate: number;
   y_coordinate: number;
 }

@@ -2,99 +2,106 @@
   import Pagination from '@/components/Pagination.vue';
   import TableHeader from '@/components/TableHeader.vue';
   import { useStationStore } from '@/stores/stations';
-import { computed } from '@vue/reactivity';
+  import { computed } from '@vue/reactivity';
   import { reactive } from 'vue';
+  import StationItem from '@/components/StationItem.vue';
+import Searchbar from '@/components/Searchbar.vue';
   const stationStore = reactive(useStationStore())
   const orderString = computed(() => stationStore.pagination.ordering > 0 ? 'ASC' : 'DESC')
   const p = computed(() => stationStore.pagination)
   const toggleOrdering = () => {
     return stationStore.pagination.ordering < 0 ? 1 : -1;
   }
+  const state = reactive({active: ''});
+  const setActive = (id: string) => {
+    state.active = id;
+  };
 </script>
 
 <template>
   <div className="flex flex-wrap justify-between items-center">
-        <Pagination/>
-      </div>
-      <ul className="journeys bg-slate-300 font-bold text-black">
-        <li className="grid grid-cols-10 p-2 border-b">
-          <!-- <p className="text-left"> #. </p> -->
-          <TableHeader
-            :clickFn="() => ''"
-            label="#."
-            :ordering="orderString"
-            :active="false"
-            :className="['text-left']"
-          />
-          <TableHeader
-            :clickFn="() => {
-              stationStore.changePagination({orderBy:'nimi', ordering: toggleOrdering()});
-            }"
-            label="Name"
-            :ordering="orderString"
-            :active="p.orderBy === 'nimi'"
-            :className="['text-left', 'col-span-2', 'cursor-pointer']"
-          />
-          <!-- <p
-            className="text-left col-span-2 cursor-pointer"
-            @click="() => {
-              stationStore.changePagination({orderBy:'nimi', ordering: toggleOrdering()});
-            }"
-          >
-            {{'Name'}}
-          </p> -->
-          <TableHeader
-            :clickFn="() => {
-              stationStore.changePagination({orderBy:'osoite', ordering: toggleOrdering()});
-            }"
-            label="Address"
-            :ordering="orderString"
-            :active="p.orderBy === 'osoite'"
-            :className="['text-left', 'col-span-2', 'cursor-pointer']"
-          />
-          <!-- <p
-            className="text-left col-span-2 cursor-pointer"
-            @click="() => {
-              stationStore.changePagination({orderBy:'osoite', ordering: toggleOrdering()});
-            }"
+    <Searchbar :set-active="setActive" :searchStringChange="() => ''" name="station-string"/>
+    <Pagination/>
+  </div>
+  <ul className="journeys bg-slate-300 font-bold text-black">
+    <li className="grid grid-cols-10 p-2 border-b">
+      <!-- <p className="text-left"> #. </p> -->
+      <TableHeader
+        :clickFn="() => ''"
+        label="#."
+        :ordering="orderString"
+        :active="false"
+        :className="['text-left']"
+      />
+      <TableHeader
+        :clickFn="() => {
+          stationStore.changePagination({orderBy:'nimi', ordering: toggleOrdering()});
+        }"
+        label="Name"
+        :ordering="orderString"
+        :active="p.orderBy === 'nimi'"
+        :className="['text-left', 'col-span-2', 'cursor-pointer']"
+      />
+      <TableHeader
+        :clickFn="() => {
+          stationStore.changePagination({orderBy:'osoite', ordering: toggleOrdering()});
+        }"
+        label="Address"
+        :ordering="orderString"
+        :active="p.orderBy === 'osoite'"
+        :className="['text-left', 'col-span-2', 'cursor-pointer']"
+      />
+      <TableHeader
+        :clickFn="() => {
+          stationStore.changePagination({orderBy:'city', ordering: toggleOrdering()});
+        }"
+        label="City"
+        :ordering="orderString"
+        :active="p.orderBy === 'city'"
+        :className="['text-left', 'cursor-pointer']"
+      />
+      <TableHeader
+        :clickFn="() => {
+          stationStore.changePagination({orderBy:'operator', ordering: toggleOrdering()});
+        }"
+        label="Operator"
+        :ordering="orderString"
+        :active="p.orderBy === 'operator'"
+        :className="['text-left', 'cursor-pointer']"
+      />
 
-          >
-            {{'Address'}}
-          </p> -->
-          <p
-            className="text-left cursor-pointer"
-            @click="() => {
-              stationStore.changePagination({orderBy:'city', ordering: toggleOrdering()});
-            }"
-          >
-            {{'City'}}
-          </p>
-          <p
-            className="text-left cursor-pointer"
-            @click="() => {
-              stationStore.changePagination({orderBy:'operator', ordering: toggleOrdering()});
-            }"
-          >
-            {{'Operator'}}
-          </p>
-          <p
-            className="text-left cursor-pointer"
-            @click="() => {
-              stationStore.changePagination({orderBy:'x_coordinate', ordering: toggleOrdering()});
-            }"
-          >
-            {{'X-coordinate'}}
-          </p>
-          <p
-            className="text-left cursor-pointer"
-            @click="() => {
-              stationStore.changePagination({orderBy:'y_coordinate', ordering: toggleOrdering()});
-            }"
-          >
-            {{'Y-coordinate'}}
-          </p>
-          <p className="text-right"> Actions </p>
-        </li>
-      </ul>
-      <!-- <StationList stations={stationStore.filteredStations} offset={offset} /> -->
+      <TableHeader
+        :clickFn="() => {
+          stationStore.changePagination({orderBy:'x_coordinate', ordering: toggleOrdering()});
+        }"
+        label="X-coordinate"
+        :ordering="orderString"
+        :active="p.orderBy === 'x_coordinate'"
+        :className="['text-left', 'cursor-pointer']"
+      />
+      <TableHeader
+        :clickFn="() => {
+          stationStore.changePagination({orderBy:'y_coordinate', ordering: toggleOrdering()});
+        }"
+        label="Y-coordinate"
+        :ordering="orderString"
+        :active="p.orderBy === 'y_coordinate'"
+        :className="['text-left', 'cursor-pointer']"
+      />
+      <p className="text-right"> Actions </p>
+    </li>
+  </ul>
+  <ul className="stations">
+    <StationItem
+      v-for="(station, i) in stationStore.filteredStations"
+      :station="station"
+      :index="i + 1 + p.offset"
+      :active="
+        state.active === station.id.toString() || stationStore.filteredStations.length === 1
+      "
+      :setActive="(id: string) =>
+        id === state.active ? setActive('') : setActive(id)
+      "
+    />
+  </ul>
 </template>
