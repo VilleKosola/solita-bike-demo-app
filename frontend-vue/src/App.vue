@@ -3,9 +3,10 @@ import { RouterLink, RouterView } from "vue-router";
 import Appheader from "./components/AppHeader.vue";
 import { useStationStore } from "./stores/stations";
 import type { Station } from "./types/station";
-
+const baseUrl = import.meta.env.VITE_BASE_URL;
 const store = useStationStore()
-fetch("http://localhost:3002/stations?limit=500")
+
+fetch(baseUrl + "/stations?limit=500")
   .then(response => response.json())
   .then((data: Station[]) => (store.setStations(data)));
 </script>
