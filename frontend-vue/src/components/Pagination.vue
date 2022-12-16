@@ -14,7 +14,7 @@ import { reactive } from 'vue';
     <div
       v-if="p.offset > 0"
       id="offset-previous"
-      class="font-bold rounded-full bg-black text-white w-7 h-7 flex items-center justify-center cursor-pointer"
+      class="font-bold rounded-full bg-white text-black w-7 h-7 flex items-center justify-center cursor-pointer"
       @click="() => {
         stationStore.changePagination({offset: p.offset - p.limit});
       }"
@@ -28,7 +28,7 @@ import { reactive } from 'vue';
     </div>
 
     <div
-      class="font-bold rounded-full bg-black text-white w-7 h-7 flex items-center justify-center cursor-pointer"
+      class="font-bold rounded-full bg-white text-black w-7 h-7 flex items-center justify-center cursor-pointer"
       @click="() => {
         stationStore.changePagination({offset: p.offset + p.limit});
       }"

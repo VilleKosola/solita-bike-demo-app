@@ -23,3 +23,11 @@ export interface StationStatistics {
   starting_from_top?: { return_station_name: string; numberoftrips: string }[];
   ending_to_top?: { departure_station_name: string; numberoftrips: string }[];
 }
+
+export interface Location {
+  lat: number;
+  lng: number;
+  name: string;
+  color?: string;
+  id: string | number;
+}

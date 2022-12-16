@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Station } from '@/types/station';
+import MapItemVue from './MapItem.vue';
+import StationStats from './StationStats.vue';
 const props = defineProps<{ 
   station: Station;
   index: number;
@@ -14,7 +16,7 @@ const props = defineProps<{
         data-testid="station-item"
         @click="() => props.setActive(station.id.toString())"
       >
-        <p class="text-left"> {{props.index}}. </p>
+        <p class="text-left"> {{index}}. </p>
         <p class="text-left col-span-2"> {{station.nimi}}</p>
         <p class="text-left col-span-2"> {{station.osoite}}</p>
         <p class="text-left">{{station.city}}</p>
@@ -31,9 +33,17 @@ const props = defineProps<{
         </p>-->
         <p></p> 
       </li>
-      <div v-if="props.active">
-        <!-- <StationStats station={station}></StationStats>
-        <LeafletMap
+      <div v-if="active">
+        <StationStats :station="station"></StationStats>
+        <MapItemVue :locations="[
+            {
+              lng: station.x_coordinate,
+              lat: station.y_coordinate,
+              name: station.nimi,
+              id: station.fid,
+            },
+          ]"></MapItemVue>
+        <!-- <LeafletMap
           locations={[
             {
               x: station.x_coordinate,

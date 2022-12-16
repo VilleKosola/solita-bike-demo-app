@@ -4,7 +4,7 @@ import { reactive } from 'vue';
 const stationStore = reactive(useStationStore());
 const p = stationStore.getPagination;
 let searchString = '';
-
+const show = false;
 const props = defineProps<{ 
   name: string;
   searchStringChange: any;
@@ -21,6 +21,8 @@ const props = defineProps<{
           type="text"
           v-model="searchString"
           placeholder="Search.."
+          @focus="show = true"
+          @blur="show = false"
           :id="props.name"
           class="searchbar"
           @keyup="(e: any) => {
@@ -30,7 +32,7 @@ const props = defineProps<{
         />
         <div class="dropdown-content show">
           <span
-            v-if="stationStore.filteredStations.length > 1 && searchString"
+            v-if="show && stationStore.filteredStations.length > 1 && searchString"
             v-for="s of stationStore.filteredStations"
             key={s.id}
             @click="(e: any) => {

@@ -107,7 +107,7 @@ a,
   width: 250px;
   height: 35px;
 }
-input{
+input, select{
   color: black;
   background-color: white;
 }
