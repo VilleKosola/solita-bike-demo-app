@@ -30,7 +30,3 @@
 ## Tests
     - run tests by running 'npm test' in frontend or backend folder
 
-TODO:
-https://github.com/nvm-sh/nvm
-
-tietokantamigraatiotyökalu: esim. flyway
