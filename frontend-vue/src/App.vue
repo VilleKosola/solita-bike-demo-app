@@ -50,9 +50,9 @@ nav a.router-link-exact-active {
   background-color: var(--vt-c-divider-dark-2);
 }
 
-nav a.router-link-exact-active:hover {
+/* nav a.router-link-exact-active:hover {
   background-color: transparent;
-}
+} */
 
 nav a {
   display: inline-block;

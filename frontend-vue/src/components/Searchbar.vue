@@ -2,7 +2,6 @@
 import { useStationStore } from '@/stores/stations';
 import { reactive } from 'vue';
 const stationStore = reactive(useStationStore());
-const p = stationStore.getPagination;
 let searchString = '';
 const show = false;
 const props = defineProps<{ 
