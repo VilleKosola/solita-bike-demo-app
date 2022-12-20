@@ -35,57 +35,57 @@ import Searchbar from '@/components/Searchbar.vue';
       />
       <TableHeader
         :clickFn="() => {
-          stationStore.changePagination({orderBy:'nimi', ordering: toggleOrdering()});
+          stationStore.changePagination({orderby:'nimi', ordering: toggleOrdering()});
         }"
         label="Name"
         :ordering="orderString"
-        :active="p.orderBy === 'nimi'"
+        :active="p.orderby === 'nimi'"
         :className="['text-left', 'col-span-2', 'cursor-pointer']"
       />
       <TableHeader
         :clickFn="() => {
-          stationStore.changePagination({orderBy:'osoite', ordering: toggleOrdering()});
+          stationStore.changePagination({orderby:'osoite', ordering: toggleOrdering()});
         }"
         label="Address"
         :ordering="orderString"
-        :active="p.orderBy === 'osoite'"
+        :active="p.orderby === 'osoite'"
         :className="['text-left', 'col-span-2', 'cursor-pointer']"
       />
       <TableHeader
         :clickFn="() => {
-          stationStore.changePagination({orderBy:'city', ordering: toggleOrdering()});
+          stationStore.changePagination({orderby:'city', ordering: toggleOrdering()});
         }"
         label="City"
         :ordering="orderString"
-        :active="p.orderBy === 'city'"
+        :active="p.orderby === 'city'"
         :className="['text-left', 'cursor-pointer']"
       />
       <TableHeader
         :clickFn="() => {
-          stationStore.changePagination({orderBy:'operator', ordering: toggleOrdering()});
+          stationStore.changePagination({orderby:'operator', ordering: toggleOrdering()});
         }"
         label="Operator"
         :ordering="orderString"
-        :active="p.orderBy === 'operator'"
+        :active="p.orderby === 'operator'"
         :className="['text-left', 'cursor-pointer']"
       />
 
       <TableHeader
         :clickFn="() => {
-          stationStore.changePagination({orderBy:'x_coordinate', ordering: toggleOrdering()});
+          stationStore.changePagination({orderby:'x_coordinate', ordering: toggleOrdering()});
         }"
         label="X-coordinate"
         :ordering="orderString"
-        :active="p.orderBy === 'x_coordinate'"
+        :active="p.orderby === 'x_coordinate'"
         :className="['text-left', 'cursor-pointer']"
       />
       <TableHeader
         :clickFn="() => {
-          stationStore.changePagination({orderBy:'y_coordinate', ordering: toggleOrdering()});
+          stationStore.changePagination({orderby:'y_coordinate', ordering: toggleOrdering()});
         }"
         label="Y-coordinate"
         :ordering="orderString"
-        :active="p.orderBy === 'y_coordinate'"
+        :active="p.orderby === 'y_coordinate'"
         :className="['text-left', 'cursor-pointer']"
       />
       <p className="text-right"> Actions </p>

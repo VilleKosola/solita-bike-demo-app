@@ -3,7 +3,7 @@ import type { Station } from "src/types/station";
 import {assign} from 'lodash';
 
 export interface PaginationSettings {
-  orderBy: string,
+  orderby: string,
   limit: number,
   offset: number,
   ordering: 1 | -1,
@@ -16,7 +16,7 @@ export const useStationStore = defineStore("stations", {
     stations: [] as Station[],
     // /** @type {} */
     pagination: {
-      orderBy: 'nimi',
+      orderby: 'nimi',
       limit: 100,
       offset: 0,
       ordering: 1,
@@ -30,7 +30,7 @@ export const useStationStore = defineStore("stations", {
     filteredStations: (state) => {
       const p = state.pagination;
       return (state.stations
-        .sort((a,b) => (a[p.orderBy as keyof Station].toString()).localeCompare((b[p.orderBy as keyof Station]).toString()) * p.ordering )
+        .sort((a,b) => (a[p.orderby as keyof Station].toString()).localeCompare((b[p.orderby as keyof Station]).toString()) * p.ordering )
         .filter(s => 
           s.nimi.trim().toLowerCase().includes(p.stationName.toLowerCase().trim()) ||
           s.osoite.trim().toLowerCase().includes(p.stationName.toLowerCase().trim())
