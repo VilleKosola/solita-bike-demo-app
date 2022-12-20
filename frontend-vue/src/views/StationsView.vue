@@ -5,7 +5,7 @@ import { useStationStore } from "@/stores/stations";
 import { computed } from "vue";
 import { reactive } from "vue";
 import StationItem from "@/components/StationItem.vue";
-import SearchBar from "@/components/SearchBar.vue";
+import SearchBarVue from "@/components/SearchBar.vue";
 const stationStore = reactive(useStationStore());
 const orderString = computed(() =>
   stationStore.pagination.ordering > 0 ? "ASC" : "DESC"
@@ -22,7 +22,7 @@ const setActive = (id: string) => {
 
 <template>
   <div className="flex flex-wrap justify-between items-center">
-    <SearchBar
+    <SearchBarVue
       :set-active="setActive"
       :searchStringChange="() => ''"
       name="station-string"

@@ -4,14 +4,14 @@ import TableHeader from "@/components/TableHeader.vue";
 import { useStationStore } from "@/stores/stations";
 import { computed, ref } from "vue";
 import { reactive, watch } from "vue";
-import Searchbar from "@/components/SearchBar.vue";
+import SearchBarVue from "@/components/SearchBar.vue";
 import type { Journey } from "@/types/journey";
 import { getAllJourneys } from "@/services/journeysService";
 import JourneyItemVue from "@/components/JourneyItem.vue";
 
 export default {
   components: {
-    Searchbar,
+    SearchBarVue,
     Pagination,
     TableHeader,
     JourneyItemVue,
@@ -77,7 +77,7 @@ export default {
 
 <template>
   <div className="flex flex-wrap justify-between items-center">
-    <Searchbar
+    <SearchBarVue
       :set-active="setActive"
       :searchStringChange="() => ''"
       name="station-string"

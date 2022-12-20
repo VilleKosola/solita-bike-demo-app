@@ -3,7 +3,7 @@ import { useStationStore } from "@/stores/stations";
 import { reactive } from "vue";
 const stationStore = reactive(useStationStore());
 let searchString = "";
-const show = false;
+let show = false;
 const props = defineProps<{
   name: string;
   searchStringChange: any;
