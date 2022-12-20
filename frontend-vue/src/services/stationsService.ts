@@ -22,10 +22,10 @@ const getStationsById = async (p: string[]) => {
   const body = JSON.stringify(p);
   try {
     const response = fetch(`${baseUrl}/stations`, {
-      method: 'POST',
+      method: "POST",
       body: body,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     return (await response).json();
@@ -38,10 +38,10 @@ const postStation = async (station: Station) => {
   const body = JSON.stringify(station);
   try {
     const response = fetch(`${baseUrl}/station`, {
-      method: 'POST',
+      method: "POST",
       body: body,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     return (await response).json();
@@ -53,7 +53,7 @@ const postStation = async (station: Station) => {
 const deleteStation = async (id: number | string) => {
   try {
     const response = fetch(`${baseUrl}/station/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
     return (await response).json();
   } catch (error) {

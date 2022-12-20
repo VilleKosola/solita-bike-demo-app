@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import classNames from 'classnames';
-const props = defineProps<{ 
+import classNames from "classnames";
+const props = defineProps<{
   clickFn: any;
   label: string;
-  ordering: 'DESC' | 'ASC';
+  ordering: "DESC" | "ASC";
   active: boolean;
   className: string[];
-}>()
-
+}>();
 </script>
 <template>
   <p
@@ -15,6 +14,9 @@ const props = defineProps<{
     @click="clickFn"
   >
     {{ props.label }}
-    <i v-if="active" :class="classNames('ml-2', 'ordering', props.ordering)"></i>
+    <i
+      v-if="active"
+      :class="classNames('ml-2', 'ordering', props.ordering)"
+    ></i>
   </p>
 </template>

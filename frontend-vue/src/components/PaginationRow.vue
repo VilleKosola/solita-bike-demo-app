@@ -1,39 +1,41 @@
 <script setup lang="ts">
-import { useStationStore } from '@/stores/stations';
-import { reactive } from 'vue';
-  const stationStore = reactive(useStationStore());
-  const p = stationStore.getPagination;
-  let limit = 100;
+import { useStationStore } from "@/stores/stations";
+import { reactive } from "vue";
+const stationStore = reactive(useStationStore());
+const p = stationStore.getPagination;
+let limit = 100;
 </script>
 
 <template>
-  <div
-    class="flex w-full justify-between p-3 pagination-parent"
-  >
+  <div class="flex w-full justify-between p-3 pagination-parent">
     <div></div>
     <div
       v-if="p.offset > 0"
       id="offset-previous"
       class="font-bold rounded-full bg-white text-black w-7 h-7 flex items-center justify-center cursor-pointer"
-      @click="() => {
-        stationStore.changePagination({offset: p.offset - p.limit});
-      }"
+      @click="
+        () => {
+          stationStore.changePagination({ offset: p.offset - p.limit });
+        }
+      "
     >
-      <span>{{' < '}}</span>
+      <span>{{ " < " }}</span>
     </div>
-    <div v-else="p.offset > 0"></div>
+    <div v-else-if="p.offset <= 0"></div>
 
     <div class="text-center">
-      {{ p.offset }} {{'-'}} {{ p.offset + p.limit }}
+      {{ p.offset }} {{ "-" }} {{ p.offset + p.limit }}
     </div>
 
     <div
       class="font-bold rounded-full bg-white text-black w-7 h-7 flex items-center justify-center cursor-pointer"
-      @click="() => {
-        stationStore.changePagination({offset: p.offset + p.limit});
-      }"
+      @click="
+        () => {
+          stationStore.changePagination({ offset: p.offset + p.limit });
+        }
+      "
     >
-      {{' > '}}
+      {{ " > " }}
     </div>
     <div>
       <select

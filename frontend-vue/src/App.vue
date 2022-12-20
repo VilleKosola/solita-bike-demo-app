@@ -4,11 +4,11 @@ import Appheader from "./components/AppHeader.vue";
 import { useStationStore } from "./stores/stations";
 import type { Station } from "./types/station";
 const baseUrl = import.meta.env.VITE_BASE_URL;
-const store = useStationStore()
+const store = useStationStore();
 
 fetch(baseUrl + "/stations?limit=500")
-  .then(response => response.json())
-  .then((data: Station[]) => (store.setStations(data)));
+  .then((response) => response.json())
+  .then((data: Station[]) => store.setStations(data));
 </script>
 
 <template>

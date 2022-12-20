@@ -1,5 +1,5 @@
-import type { Journey } from '@/types/journey';
-import { getParams } from './helperService';
+import type { Journey } from "@/types/journey";
+import { getParams } from "./helperService";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export interface JournalParams {
@@ -30,10 +30,10 @@ const postJourney = async (journey: Journey) => {
   const body = JSON.stringify(journey);
   try {
     const response = fetch(`${baseUrl}/journey`, {
-      method: 'POST',
+      method: "POST",
       body: body,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
     return (await response).json();
@@ -45,7 +45,7 @@ const postJourney = async (journey: Journey) => {
 const deleteJourney = async (id: number | string) => {
   try {
     const response = fetch(`${baseUrl}/journey/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
     return (await response).json();
   } catch (error) {
