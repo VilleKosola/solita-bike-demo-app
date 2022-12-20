@@ -43,17 +43,5 @@ const props = defineProps<{
               id: station.fid,
             },
           ]"></MapItemVue>
-        <!-- <LeafletMap
-          locations={[
-            {
-              x: station.x_coordinate,
-              y: station.y_coordinate,
-              name: station.nimi,
-              id: station.fid,
-            },
-          ]}
-          onClick={() => ''}
-          enableMarkerAdd={false}
-        /> -->
       </div>
 </template>

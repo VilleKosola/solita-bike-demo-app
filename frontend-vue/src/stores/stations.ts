@@ -30,7 +30,7 @@ export const useStationStore = defineStore("stations", {
     filteredStations: (state) => {
       const p = state.pagination;
       return (state.stations
-        .sort((a,b) => (a[p.orderby as keyof Station].toString()).localeCompare((b[p.orderby as keyof Station]).toString()) * p.ordering )
+        .sort((a,b) => (a[p.orderby as keyof Object].toString()).localeCompare((b[p.orderby as keyof Object]).toString()) * p.ordering )
         .filter(s => 
           s.nimi.trim().toLowerCase().includes(p.stationName.toLowerCase().trim()) ||
           s.osoite.trim().toLowerCase().includes(p.stationName.toLowerCase().trim())

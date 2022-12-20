@@ -8,15 +8,16 @@ import StationItem from '@/components/StationItem.vue';
 import Searchbar from '@/components/Searchbar.vue';
 import type { Journey } from '@/types/journey';
 import { getAllJourneys } from '@/services/journeysService';
-const baseUrl = import.meta.env.VITE_BASE_URL;
+import JourneyItemVue from '@/components/JourneyItem.vue';
 
 export default {
   components: {
     StationItem,
     Searchbar,
     Pagination,
-    TableHeader
-  },
+    TableHeader,
+    JourneyItemVue
+},
   setup() {
     const stationStore = reactive(useStationStore())
     const orderString = computed(() => stationStore.pagination.ordering > 0 ? 'ASC' : 'DESC')
@@ -44,7 +45,7 @@ export default {
 
     watch(stationStore, async (newStore, oldStore) => {
       const {from, to, minDist, maxDist, minDur, maxDur} = state;
-      const {limit, offset, stationName} = stationStore.pagination;
+      const {limit, offset, stationName} = newStore.pagination;
       setTimeout(() => {
         getAllJourneys({
           limit,
@@ -69,7 +70,8 @@ export default {
       state,
       toggleOrdering,
       stationStore,
-      p
+      p,
+      journeys
     }
   },
 }
@@ -113,9 +115,9 @@ export default {
     </li>
   </ul>
   <ul className="stations">
-    <StationItem v-for="(station, i) in stationStore.filteredStations" :station="station" :index="i + 1 + p.offset"
+    <JourneyItemVue v-for="(journey, i) in journeys" :journey="journey" :index="i + 1 + p.offset"
       :active="
-        state.active === station.id.toString() || stationStore.filteredStations.length === 1
+        state.active === journey.id.toString() || journeys.length === 1
       " :setActive="(id: string) =>
   id === state.active ? setActive('') : setActive(id)
 " />

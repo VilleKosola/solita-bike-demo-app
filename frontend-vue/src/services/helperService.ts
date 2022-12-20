@@ -5,7 +5,7 @@ type GenericObject = { [key: string]: string | number };
 
 const getParams = (paramObject: GenericObject) => {
   const p = _.cloneDeep(paramObject) as Record<string, string>;
-  forIn(paramObject,(key, value) => {
+  forIn(paramObject,(value, key) => {
     p[key] = value.toString();
   });
   const params = new URLSearchParams(p);

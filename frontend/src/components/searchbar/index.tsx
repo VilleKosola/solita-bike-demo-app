@@ -51,6 +51,7 @@ const Searchbar = (props: SearchbarProps) => {
         {results.map((s) => (
           <span
             data-testid="search-item"
+            aria-roledescription='Clickable search bar result list item'
             key={s.id}
             onClick={(e) => {
               setSearchString(s.nimi);
