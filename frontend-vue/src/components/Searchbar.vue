@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useStationStore } from "@/stores/stations";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 const stationStore = reactive(useStationStore());
 let searchString = "";
-let show = false;
+const show = ref(false);
 const props = defineProps<{
   name: string;
   searchStringChange: any;
