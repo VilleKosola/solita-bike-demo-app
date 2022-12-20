@@ -45,7 +45,7 @@ jobs:
         actionid: ${{ github.repository }}/runs/${{ github.run_id }}
         webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
 
-  TestFrontend:
+  TestVueFrontend:
     runs-on: ubuntu-latest
     defaults:
       run:
