@@ -64,8 +64,8 @@ jobs:
     - name: Install with npm ci
       run:
         npm ci
-    # - name: Build
-    #   run: npm run build-only
+    - name: Build
+      run: npm run build-only
     - name: Lint
       run: npm run lint
     - name: Check format
