@@ -82,7 +82,7 @@ jobs:
       with:
         project: ${{ github.repository }}
         commit: ${{ steps.slug.outputs.sha8 }}
-        branch: 'Frontend'
+        branch: 'Frontend-vue'
         status: ${{ job.status }}
         actionid: ${{ github.repository }}/runs/${{ github.run_id }}
         webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
