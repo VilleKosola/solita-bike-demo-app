@@ -36,7 +36,7 @@ jobs:
       id: slug
     - name: Chat Setup
       if: always()
-      uses: DTherHtun/google-chat-action@v0.8
+      uses: DTherHtun/google-chat-action@v0.9
       with:
         project: ${{ github.repository }}
         commit: ${{ steps.slug.outputs.sha8 }}
@@ -78,7 +78,7 @@ jobs:
       id: slug
     - name: Chat Setup
       if: always()
-      uses: DTherHtun/google-chat-action@v0.8
+      uses: DTherHtun/google-chat-action@v0.9
       with:
         project: ${{ github.repository }}
         commit: ${{ steps.slug.outputs.sha8 }}
@@ -115,7 +115,7 @@ jobs:
       id: slug
     - name: Chat Setup
       if: always()
-      uses: DTherHtun/google-chat-action@v0.8
+      uses: DTherHtun/google-chat-action@v0.9
       with:
         project: ${{ github.repository }}
         commit: ${{ steps.slug.outputs.sha8 }}
